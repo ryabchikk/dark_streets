@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6160922406177338407}
   - component: {fileID: 4005220397449727438}
   - component: {fileID: -761341145832879502}
-  - component: {fileID: -6520636601590097034}
+  - component: {fileID: 9214385477415898445}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd21d76a9272f24b9c86063a8bab072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-6520636601590097034
+--- !u!114 &9214385477415898445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,18 +76,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2035617260631331110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 7927a1a8f8a292c4c874cf83cea6ed75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
   SyncPositionY: 0
   SyncPositionZ: 1
-  SyncRotAngleX: 1
+  SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 0
+  SyncRotAngleZ: 1
   SyncScaleX: 0
   SyncScaleY: 0
-  SyncScaleZ: 1
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
