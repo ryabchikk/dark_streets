@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!212 &107963144 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 9191767332561841045, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+  m_PrefabInstance: {fileID: 2102640586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1420869174
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,9 +314,107 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2102640586
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94807522226256566, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4939015322668000207, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: m_Name
+      value: Dice
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: rend
+      value: 
+      objectReference: {fileID: 107963144}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: countSides
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: animationDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: diceSides.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: diceSides.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 10c743a9a246ddd41978a337a4a6bc5f, type: 3}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: diceSides.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: bcd2a15353b82a94296fb91df62fb5ee, type: 3}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: diceSides.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 767967a1ad3c2f64fab8669edc26cb55, type: 3}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: diceSides.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 100cd8134c45884449c28bfa630d4e8c, type: 3}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: diceSides.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1cf6a4d91eb75c24eaeb3da18c42549b, type: 3}
+    - target: {fileID: 6639420047224431971, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
+      propertyPath: diceSides.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: d9982cdfdc29be44eab32b4919344360, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 994c53c0a2b2da749ba4b456f3a4a032, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1993278611}
   - {fileID: 1420869176}
+  - {fileID: 2102640586}

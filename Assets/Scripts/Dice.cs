@@ -5,52 +5,24 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    public string diceSidesFolder = "DiceSides";
-    public SpriteRenderer rend;
-    public float animationDuration = 1.5f;
+    [SerializeField] private Sprite[] diceSides;
+    [SerializeField] private SpriteRenderer rend;
+    [SerializeField,Range(2,6)] private int countSides;
 
-    private bool isRolling = false;
-    private int finalSide = -1;
-
-    private Sprite[] diceSides; 
-    private float rollTimer = 0.0f;
-
-
-    private void Awake()
-    {
-        rend = GetComponent <SpriteRenderer>();
-        diceSides = Resources.LoadAll<Sprite>(diceSidesFolder);
-    }
     private void OnMouseDown()
     {
-        if (!isRolling)
-        {
-            StartCoroutine(RollTheDice());
-        }
+        RollTheDice();
     }
 
-    private IEnumerator RollTheDice()
+    private void RollTheDice()
     {
-        isRolling = true;
-        finalSide = -1;
-        rollTimer = 0.0f;
-
-        int randomDiceSide = 0; 
-
-        while (rollTimer < animationDuration)
-        {
-            float t = rollTimer / animationDuration;
-            randomDiceSide = Random.Range(0, diceSides.Length);
-            rend.sprite = diceSides[randomDiceSide];
-
-            yield return null;
-
-            rollTimer += Time.deltaTime;
-        }
-
-        finalSide = randomDiceSide + 1;
+        int finalSide = ChooseSideDice();
+        rend.sprite = diceSides[finalSide-1];
         Debug.Log("Final side: " + finalSide);
-
-        isRolling = false;
+    }    
+    
+    private int ChooseSideDice()
+    {
+        return Random.Range(0, countSides) + 1;
     }
 }

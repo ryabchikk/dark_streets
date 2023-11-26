@@ -98,9 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76490d684ce85da4f9645acd4a120c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSidesFolder: DiceSides
+  diceSides:
+  - {fileID: 21300000, guid: 10c743a9a246ddd41978a337a4a6bc5f, type: 3}
+  - {fileID: 21300000, guid: bcd2a15353b82a94296fb91df62fb5ee, type: 3}
+  - {fileID: 21300000, guid: 767967a1ad3c2f64fab8669edc26cb55, type: 3}
+  - {fileID: 21300000, guid: 100cd8134c45884449c28bfa630d4e8c, type: 3}
+  - {fileID: 21300000, guid: 1cf6a4d91eb75c24eaeb3da18c42549b, type: 3}
+  - {fileID: 21300000, guid: d9982cdfdc29be44eab32b4919344360, type: 3}
   rend: {fileID: 9191767332561841045}
-  animationDuration: 1.5
+  countSides: 0
 --- !u!61 &1683046952887164148
 BoxCollider2D:
   m_ObjectHideFlags: 0
