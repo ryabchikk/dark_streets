@@ -1,16 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Map map;
     [SerializeField,Min(1)] private int speed;
-
+    [SerializeField] private Wallet wallet;
+    [SerializeField] private Dice dice;
     private List<Transform> _listNodesTransform;
 
-    private int _steps;
+    private int _steps = 0;
     private int _currentIndex = 0;
     
     private bool _isMoving=false;
@@ -20,34 +19,46 @@ public class PlayerMovement : MonoBehaviour
         _listNodesTransform = map.GetListNodesTransform();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.Space)&&!_isMoving) {
-            _isMoving = true;
-            _steps =Random.Range(1, 7);
-            Debug.Log(_steps);
-        }
-
-        if(_isMoving) { 
-            Move(ref _steps);
+        if(_isMoving) {
+            Move();
         }
     }
 
-    private void Move(ref int steps)
+    private void OnEnable()
     {
-        if (steps != 0) {
+        dice.DiceRolled += StartMoving;
+    }
 
+    private void OnDisable()
+    {
+        dice.DiceRolled -= StartMoving;
+    }
+    
+    private void StartMoving()
+    {
+        dice.isRolled = false;
+        _steps = dice.finalSide;
+        _isMoving = !_isMoving;
+    }
+    
+    private void Move()
+    {
+        if (_steps != 0) {
             CheckMaxNode();
-            MoveToNextNode(ref steps);
+            MoveToNextNode();
         }
         else {
             _isMoving = false;
+            dice.isRolled = true;
+            wallet.TrySpendMoney(1000);
         }
     }
 
 
     
-    private void MoveToNextNode(ref int steps)
+    private void MoveToNextNode()
     {
         Vector3 nextNode = _listNodesTransform[_currentIndex + 1].position;
         Vector3 newPosition = new Vector3(nextNode.x, transform.position.y, nextNode.z);
@@ -56,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (CheckPosOnNode(nextNode)) {
             _currentIndex++;
-            steps--;
+            _steps--;
         }
     }
 

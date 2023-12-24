@@ -1,24 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 public class Dice : MonoBehaviour
 {
     [SerializeField] private Sprite[] diceSides;
-    [SerializeField] private SpriteRenderer rend;
+    [SerializeField] private Image rend;
     [SerializeField,Range(2,6)] private int countSides;
+    [HideInInspector]
+    public bool isRolled;
 
-    private void OnMouseDown()
+    public int finalSide { get; private set; }
+    public event UnityAction DiceRolled;
+
+    private void Start()
     {
-        RollTheDice();
+        isRolled = true;
     }
 
-    private void RollTheDice()
+    public void RollClick()
     {
-        int finalSide = ChooseSideDice();
-        rend.sprite = diceSides[finalSide-1];
-        Debug.Log("Final side: " + finalSide);
+        if (isRolled) {
+            RollTheDice();
+        }
+    }
+    
+    private void RollTheDice()
+    {   
+            finalSide = ChooseSideDice();
+            rend.sprite = diceSides[finalSide-1];
+            DiceRolled?.Invoke();
+            Debug.Log("Final side: " + finalSide);
     }    
     
     private int ChooseSideDice()
