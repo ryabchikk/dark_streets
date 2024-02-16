@@ -1,56 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 public class Dice : MonoBehaviour
 {
-    public string diceSidesFolder = "DiceSides";
-    public SpriteRenderer rend;
-    public float animationDuration = 1.5f;
+    [SerializeField] private Sprite[] diceSides;
+    [SerializeField] private Image rend;
+    [SerializeField,Range(2,6)] private int countSides;
+    [HideInInspector]
+    public bool isRolled;
 
-    private bool isRolling = false;
-    private int finalSide = -1;
+    public int finalSide { get; private set; }
+    public event UnityAction DiceRolled;
 
-    private Sprite[] diceSides; 
-    private float rollTimer = 0.0f;
-
-
-    private void Awake()
+    private void Start()
     {
-        rend = GetComponent <SpriteRenderer>();
-        diceSides = Resources.LoadAll<Sprite>(diceSidesFolder);
-    }
-    private void OnMouseDown()
-    {
-        if (!isRolling)
-        {
-            StartCoroutine(RollTheDice());
-        }
+        isRolled = true;
     }
 
-    private IEnumerator RollTheDice()
+    public void RollClick()
     {
-        isRolling = true;
-        finalSide = -1;
-        rollTimer = 0.0f;
-
-        int randomDiceSide = 0; 
-
-        while (rollTimer < animationDuration)
-        {
-            float t = rollTimer / animationDuration;
-            randomDiceSide = Random.Range(0, diceSides.Length);
-            rend.sprite = diceSides[randomDiceSide];
-
-            yield return null;
-
-            rollTimer += Time.deltaTime;
+        if (isRolled) {
+            RollTheDice();
         }
-
-        finalSide = randomDiceSide + 1;
-        Debug.Log("Final side: " + finalSide);
-
-        isRolling = false;
+    }
+    
+    private void RollTheDice()
+    {   
+            finalSide = ChooseSideDice();
+            rend.sprite = diceSides[finalSide-1];
+            DiceRolled?.Invoke();
+            Debug.Log("Final side: " + finalSide);
+    }    
+    
+    private int ChooseSideDice()
+    {
+        return Random.Range(0, countSides) + 1;
     }
 }
