@@ -3,61 +3,20 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public enum TypePlayer
+public class Player : MonoBehaviour
 {
-    classic,
-    fither,
-    money,
-    buisness
-}
-
-public class Player
-{
-    private int money;
-    private int countFighter;
-    private int countBusiness;
-    private TypePlayer typePlayer;
-
-    public Player()
-    {
-        money = 10000;
-        countFighter = 0;
-        countBusiness = 0;
-        typePlayer = TypePlayer.classic;
-    }
+    [Header("Settings player")]
+    [SerializeField] private int money;
+    [SerializeField] private TypePlayer typePlayer;
     
-    public Player(int money, int countFighter, int countBusiness, TypePlayer typePlayer)
+    [Header("Components player")]
+    public PlayerMovement playerMovement;
+
+    [HideInInspector]
+    public PlayerClass playerClass;
+
+    public void Awake()
     {
-        this.money = money;
-        this.countFighter = countFighter;
-        this.countBusiness = countBusiness;
-        this.typePlayer = typePlayer;
+        playerClass =  new PlayerClass(money,typePlayer);
     }
-
-    public int GetMoney() { return money; }
-    public int GetCountFighter() { return countFighter; }
-    public int GetCountBusiness() {  return countBusiness; }
-    public TypePlayer GetTypePlayer() {  return typePlayer; }
-
-    public void SetMoney(int money)
-    { 
-        if (money >= 0) { 
-            this.money = money; 
-        }
-    }
-
-    public void SetCountFighter(int countFighter)
-    {
-        if(countFighter >= 0) { 
-            this.countFighter= countFighter;
-        }
-    }
-
-    public void SetCountBusiness(int countBusiness) 
-    {
-        if (countBusiness >= 0) {
-            this.countBusiness = countBusiness;
-        }
-    }
-
 }
