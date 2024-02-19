@@ -4,11 +4,13 @@ using UnityEngine;
 
 public enum TypeBusiness
 {
-    Alcohol, Weapon, Casino, Tobacco, Tote
+    //Alcohol, Weapon, Casino, Tobacco, Tote
+    Алкоголь, Оружие, Казино, Табак, Тотализатор
 }
 public enum SizeBusiness
 {
-    Small, Medium, Big
+    //Small, Medium, Big
+    Малый, Средний, Большой
 }
 public class BusinessClass
 {   

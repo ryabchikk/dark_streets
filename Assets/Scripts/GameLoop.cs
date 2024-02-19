@@ -8,7 +8,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private Player[] players;
     [SerializeField] private Map map;
     [SerializeField] private Dice dice;
-    
+    [SerializeField] private BusinessCard card;
     private Player currentPlayer;
     private int _indexPlayer = 0;
     private int _steps = 0;
@@ -68,10 +68,13 @@ public class GameLoop : MonoBehaviour
     private void CheckZeroSteps()
     {
         if (_steps == 0) {
-
+            
             if (map.GetListNodes()[currentPlayer.playerMovement.currentIndex].GetComponent<BusinessController>()) {
 
+                BusinessController businessController = map.GetListNodes()[currentPlayer.playerMovement.currentIndex].GetComponent<BusinessController>();
+                
                 currentPlayer.playerClass.AddNewBusinessIndex(currentPlayer.playerMovement.currentIndex);
+                card.ActivateBusinessCard(businessController.businessClass);
                 
                 Debug.Log("Count business: " + currentPlayer.playerClass.businessIndex.Count);
             }
