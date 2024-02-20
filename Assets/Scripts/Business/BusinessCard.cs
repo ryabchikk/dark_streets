@@ -8,7 +8,7 @@ public class BusinessCard : MonoBehaviour
     [SerializeField] private Text type;
     [SerializeField] private Text size;
     [SerializeField] private Text price;
-
+    [SerializeField] private Text name;
     public void ActivateBusinessCard(BusinessClass business)
     {
         UpdateStrings(business);
@@ -17,9 +17,10 @@ public class BusinessCard : MonoBehaviour
 
     private void UpdateStrings(BusinessClass business)
     {
-        size.text = business.sizeBusiness.ToString();
-        type.text = business.typeBusiness.ToString();
+        size.text = business.size.ToString();
+        type.text = business.type.ToString();
         price.text = business.price.ToString();
+        name.text = business.name.ToString();
     }
     private void AnimateBusinessCard()
     {

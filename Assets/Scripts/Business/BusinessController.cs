@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BusinessController : MonoBehaviour
 {
-    [SerializeField] private GameObject businessCard;
+    [SerializeField] private string nameBusiness;    
+    [SerializeField] private TypeBusiness type;
+    [SerializeField] private SizeBusiness size;
     [SerializeField] private int price;
-    [SerializeField] private TypeBusiness typeBusiness;
-    [SerializeField] private SizeBusiness sizeBusiness;
+    //[SerializeField] private GameObject businessCard;
 
+    [HideInInspector]
     public BusinessClass businessClass;
 
     private void Awake()
     {
-        businessClass = new BusinessClass(price, sizeBusiness, typeBusiness);
+        businessClass = new BusinessClass(price, nameBusiness, size, type);
     }
 
 }
