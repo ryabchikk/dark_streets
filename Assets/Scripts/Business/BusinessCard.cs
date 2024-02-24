@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-
+using static UIAnimations;
 public class BusinessCard : MonoBehaviour
 {
     [SerializeField] private Text type;
@@ -46,9 +46,6 @@ public class BusinessCard : MonoBehaviour
     
     private void AnimateBusinessCard()
     {
-        GameObject go = gameObject;
-        go.SetActive(true);
-        go.transform.localPosition = new Vector2(0, -Screen.height);
-        gameObject.LeanMoveLocalY(-Screen.height/4, 0.5f).setEaseOutExpo();
+        YUIMover(gameObject, new Vector2(0, -Screen.height), -Screen.height / 8, 0.5f, LeanTweenType.easeOutExpo);
     }
 }
