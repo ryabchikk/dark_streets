@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField, Min(1)] private int speed;
-    [SerializeField] private Wallet wallet;
     [SerializeField] private Dice dice;
     
     [HideInInspector]
@@ -32,12 +31,11 @@ public class PlayerMovement : MonoBehaviour
             CheckMaxNode();
             MoveToNextNode();
             steps = _steps;
-        }
-        else
-        {
-            isMoving = false;
-            dice.isRolled = true;
-            wallet.TrySpendMoney(1000);
+            if (_steps == 0)
+            {
+                isMoving = false;
+                dice.isRolled = true;
+            }
         }
     }
     

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,11 +10,12 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private Map map;
     [SerializeField] private Dice dice;
     [SerializeField] private BusinessCard card;
+    [SerializeField] private WalletView walletView;
     private Player currentPlayer;
     private int _indexPlayer = 0;
     private int _steps = 0;
 
-    private void Awake()
+    private void Start()
     {
         foreach (Player player in players) 
         { 
@@ -21,7 +23,13 @@ public class GameLoop : MonoBehaviour
         }
 
         currentPlayer = players[_indexPlayer];
-        
+        walletView.SetCurrentWallet(currentPlayer.playerClass.Wallet);
+    }
+
+    // For debug
+    public void AddMoneyToCurrentPlayer()
+    {
+        currentPlayer.playerClass.Wallet.AddMoney(1000);
     }
 
     private void FixedUpdate()
@@ -38,12 +46,19 @@ public class GameLoop : MonoBehaviour
     
     private void OnEnable()
     {
-        dice.DiceRolled += StartMovingPlayer;
+        dice.DiceRolled += SwitchTurn; // Change to StartMovingPlayer when turn transfer mechanic is ready
     }
 
     private void OnDisable()
     {
-        dice.DiceRolled -= StartMovingPlayer;
+        dice.DiceRolled -= SwitchTurn; // Change to StartMovingPlayer when turn transfer mechanic is ready
+    }
+
+    private void SwitchTurn()
+    {
+        UpdateCurrentPlayer();
+        
+        StartMovingPlayer(); // Remove when turn transfer mechanic is ready
     }
 
     private void StartMovingPlayer()
@@ -51,6 +66,7 @@ public class GameLoop : MonoBehaviour
         dice.isRolled = false;
         _steps = dice.finalSide;
         currentPlayer.playerMovement.isMoving = true;
+        currentPlayer.playerClass.Spend(1000);
     }
 
     private void UpdateCurrentPlayer()
@@ -63,23 +79,35 @@ public class GameLoop : MonoBehaviour
         }
 
         currentPlayer = players[_indexPlayer];
+        walletView.SetCurrentWallet(currentPlayer.playerClass.Wallet);
     }
 
     private void CheckZeroSteps()
     {
-        if (_steps == 0) {
-            
-            if (map.GetListNodes()[currentPlayer.playerMovement.currentIndex].GetComponent<BusinessController>()) {
-
-                BusinessController businessController = map.GetListNodes()[currentPlayer.playerMovement.currentIndex].GetComponent<BusinessController>();
-                
-                currentPlayer.playerClass.AddNewBusinessIndex(currentPlayer.playerMovement.currentIndex);
-                card.ActivateBusinessCard(businessController.businessClass);
-                
-                Debug.Log("Count business: " + currentPlayer.playerClass.businessIndex.Count);
-            }
-
-            UpdateCurrentPlayer();
+        if (_steps != 0) 
+            return;
+        
+        var businessController = map.GetBusinessAt(currentPlayer.playerMovement.currentIndex);
+        if (businessController is null)
+        {
+            return;
         }
+        
+        if(businessController.businessClass.Owner is null)
+        {
+            card.ActivateBusinessCard(businessController.businessClass, () =>
+            {
+                if (businessController.businessClass.TryBuy(currentPlayer.playerClass))
+                {
+                    card.OnSuccessfulBuy();
+                }
+                else
+                {
+                    card.OnUnsuccessfulBuy();
+                }
+            });
+        }
+
+        Debug.Log("Count business: " + currentPlayer.playerClass.businessIndex.Count);
     }
 }

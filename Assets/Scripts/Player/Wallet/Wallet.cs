@@ -15,6 +15,7 @@ public class Wallet : MonoBehaviour
         money += amount;
 
         AmountChanged?.Invoke();
+        Debug.Log($"Add Money {money}");
     }
 
     public bool TrySpendMoney(int amount)
@@ -29,6 +30,8 @@ public class Wallet : MonoBehaviour
             money -= amount;
             AmountChanged?.Invoke();
         }
+        
+        Debug.Log($"Spend Money {money}");
 
         return isEnough;
     }

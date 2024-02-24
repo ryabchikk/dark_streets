@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [Header("Settings player")]
     [SerializeField] private int money;
     [SerializeField] private TypePlayer typePlayer;
+    [SerializeField] private Wallet wallet;
     
     [Header("Components player")]
     public PlayerMovement playerMovement;
@@ -17,6 +18,6 @@ public class Player : MonoBehaviour
 
     public void Awake()
     {
-        playerClass =  new PlayerClass(money,typePlayer);
+        playerClass =  new PlayerClass(money, typePlayer, wallet);
     }
 }

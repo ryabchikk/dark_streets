@@ -7,16 +7,18 @@ using UnityEngine.UI;
 public class WalletView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI amountView;
-    [SerializeField] private Wallet wallet;
+    private Wallet wallet;
 
-    private void OnDisable()
+    public void SetCurrentWallet(Wallet newWallet)
     {
-        wallet.AmountChanged -= DisplayAmount;
-    }
-
-    private void OnEnable()
-    {
+        if(wallet is not null)
+        {
+            wallet.AmountChanged -= DisplayAmount;
+        }
+        
+        wallet = newWallet;
         wallet.AmountChanged += DisplayAmount;
+        DisplayAmount();
     }
 
     private void DisplayAmount()

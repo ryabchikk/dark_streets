@@ -856,6 +856,7 @@ MonoBehaviour:
   map: {fileID: 40904120}
   dice: {fileID: 1056173048}
   card: {fileID: 1819910363}
+  walletView: {fileID: 842965185}
 --- !u!4 &87917760
 Transform:
   m_ObjectHideFlags: 0
@@ -1784,11 +1785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000019441291
+      value: -0.000000019441293
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000009899982
+      value: 0.000000009899983
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8689,7 +8690,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountView: {fileID: 327201444}
-  wallet: {fileID: 1352534498}
 --- !u!114 &842965186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11941,7 +11941,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214324970}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.45377764, y: 0.000000019441291, z: -0.000000009899982, w: 0.891115}
+  m_LocalRotation: {x: 0.45377764, y: -0.000000019441293, z: 0.000000009899983, w: 0.891115}
   m_LocalPosition: {x: 2.4, y: 44, z: -105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17771,6 +17771,7 @@ MonoBehaviour:
   size: {fileID: 161055661}
   price: {fileID: 599435185}
   name: {fileID: 1247928253}
+  buyButton: {fileID: 1033288640}
 --- !u!1001 &1826193784
 PrefabInstance:
   m_ObjectHideFlags: 0
