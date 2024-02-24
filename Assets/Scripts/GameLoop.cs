@@ -41,7 +41,6 @@ public class GameLoop : MonoBehaviour
         else {
             dice.isRolled = true;
         }
-        
     }
     
     private void OnEnable()

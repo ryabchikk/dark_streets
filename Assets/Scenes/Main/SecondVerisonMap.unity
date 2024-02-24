@@ -1785,11 +1785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000019441293
+      value: 0.000000019441291
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000009899983
+      value: -0.000000009899982
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9011,6 +9011,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654745dfa242ca54cbe2bf82a40f5a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &923825520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4370915213134167505, guid: 2ed30bf6404226145938cf8665ccb808, type: 3}
+  m_PrefabInstance: {fileID: 9025016646773953807}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c912e03e39daaf419362230e077f2c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &933736980
 GameObject:
   m_ObjectHideFlags: 0
@@ -11941,7 +11952,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214324970}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.45377764, y: -0.000000019441293, z: 0.000000009899983, w: 0.891115}
+  m_LocalRotation: {x: 0.45377764, y: 0.000000019441291, z: -0.000000009899982, w: 0.891115}
   m_LocalPosition: {x: 2.4, y: 44, z: -105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12032,10 +12043,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1352534498}
-        m_TargetAssemblyTypeName: Wallet, Assembly-CSharp
-        m_MethodName: AddMoney
-        m_Mode: 3
+      - m_Target: {fileID: 87917759}
+        m_TargetAssemblyTypeName: GameLoop, Assembly-CSharp
+        m_MethodName: AddMoneyToCurrentPlayer
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20573,6 +20584,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100261583524633284, guid: 2ed30bf6404226145938cf8665ccb808, type: 3}
+      propertyPath: wallet
+      value: 
+      objectReference: {fileID: 923825520}
     - target: {fileID: 2836766611152036202, guid: 2ed30bf6404226145938cf8665ccb808, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.39
@@ -20678,6 +20693,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2894882597450116952, guid: 2f79525b70fe10f42abf0989ee23b203, type: 3}
+      propertyPath: wallet
+      value: 
+      objectReference: {fileID: 1352534498}
     - target: {fileID: 3224403539487575153, guid: 2f79525b70fe10f42abf0989ee23b203, type: 3}
       propertyPath: m_Name
       value: PlayerBullet
