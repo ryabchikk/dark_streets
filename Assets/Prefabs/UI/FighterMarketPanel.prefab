@@ -875,7 +875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5576784070810688171, guid: 6503b3c5751abef42834793961d30c67, type: 3}
       propertyPath: m_text
-      value: "\u041D\u0430\u0451\u043C\u043D\u0438\u043A \u0441 \u043A\u0430\u0441\u0442\u0435\u0442\u043E\u043C"
+      value: "\u041D\u0430\u0451\u043C\u043D\u0438\u043A \u0441 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043C"
       objectReference: {fileID: 0}
     - target: {fileID: 6477647177910550921, guid: 6503b3c5751abef42834793961d30c67, type: 3}
       propertyPath: m_text
