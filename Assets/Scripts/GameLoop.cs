@@ -20,6 +20,7 @@ public class GameLoop : MonoBehaviour
     private Player currentPlayer;
     private int _indexPlayer = 0;
     private int _steps = 0;
+    private FighterMarket _fighterMarket = new();
 
     private void Start()
     {
@@ -65,6 +66,30 @@ public class GameLoop : MonoBehaviour
         UpdateCurrentPlayer();
         dice.isRolled = true;
         switchTurnButton.enabled = false;
+    }
+
+    // Callback for UI button
+    public void BuyFighter(int typeNum, int amount)
+    {
+        var type = (FighterType)typeNum;
+        if (currentPlayer.playerClass.TryBuy(_fighterMarket, type, amount))
+        {
+            // todo
+        }
+        else
+        {
+            // todo
+        }
+    }
+
+    public IEnumerable<BusinessClass> GetBusinessesForCurrentPlayer()
+    {
+        return map
+            .GetListNodes()
+            .Select(node => node.GetComponent<BusinessController>())
+            .Where(controller => controller is not null)
+            .Select(controller => controller.businessClass)
+            .Where(business => business.Owner == currentPlayer.playerClass);
     }
 
     private void StartMovingPlayer()

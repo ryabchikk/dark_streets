@@ -36,5 +36,25 @@ public class PlayerClass
     {
         return _fighters[type];
     }
+
+    public bool TryBuy(FighterMarket market, FighterType type, int amount)
+    {
+        var price = Fighter.OfType(type).Price;
+        if (Wallet.money < price * amount || market.GetFightersRemaining(type) < amount)
+            return false;
+        
+        Wallet.TrySpendMoney(price * amount);
+        market.TryBuy(type, amount);
+        
+        if (_fighters.ContainsKey(type))
+        {
+            _fighters[type] += amount;
+        }
+        else
+        {
+            _fighters.Add(type, amount);
+        }
+        return true;
+    }
 }
 
