@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLoop : MonoBehaviour
 {
@@ -11,9 +13,14 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private Dice dice;
     [SerializeField] private BusinessCard card;
     [SerializeField] private WalletView walletView;
+    [SerializeField] private Button switchTurnButton;
+
+    public event Action RoundComplete;
+    
     private Player currentPlayer;
     private int _indexPlayer = 0;
     private int _steps = 0;
+    private FighterMarket _fighterMarket = new();
 
     private void Start()
     {
@@ -39,25 +46,50 @@ public class GameLoop : MonoBehaviour
             CheckZeroSteps();
         }
         else {
-            dice.isRolled = true;
+            //dice.isRolled = true;
+            switchTurnButton.enabled = true;
         }
     }
     
     private void OnEnable()
     {
-        dice.DiceRolled += SwitchTurn; // Change to StartMovingPlayer when turn transfer mechanic is ready
+        dice.DiceRolled += StartMovingPlayer; // Change to StartMovingPlayer when turn transfer mechanic is ready
     }
 
     private void OnDisable()
     {
-        dice.DiceRolled -= SwitchTurn; // Change to StartMovingPlayer when turn transfer mechanic is ready
+        dice.DiceRolled -= StartMovingPlayer; // Change to StartMovingPlayer when turn transfer mechanic is ready
     }
 
-    private void SwitchTurn()
+    public void SwitchTurn()
     {
         UpdateCurrentPlayer();
-        
-        StartMovingPlayer(); // Remove when turn transfer mechanic is ready
+        dice.isRolled = true;
+        switchTurnButton.enabled = false;
+    }
+
+    // Callback for UI button
+    public void BuyFighter(int typeNum, int amount)
+    {
+        var type = (FighterType)typeNum;
+        if (currentPlayer.playerClass.TryBuy(_fighterMarket, type, amount))
+        {
+            // todo
+        }
+        else
+        {
+            // todo
+        }
+    }
+
+    public IEnumerable<BusinessClass> GetBusinessesForCurrentPlayer()
+    {
+        return map
+            .GetListNodes()
+            .Select(node => node.GetComponent<BusinessController>())
+            .Where(controller => controller is not null)
+            .Select(controller => controller.businessClass)
+            .Where(business => business.Owner == currentPlayer.playerClass);
     }
 
     private void StartMovingPlayer()
@@ -65,7 +97,7 @@ public class GameLoop : MonoBehaviour
         dice.isRolled = false;
         _steps = dice.finalSide;
         currentPlayer.playerMovement.isMoving = true;
-        currentPlayer.playerClass.Spend(1000);
+        //currentPlayer.playerClass.Spend(1000);
     }
 
     private void UpdateCurrentPlayer()
@@ -75,6 +107,7 @@ public class GameLoop : MonoBehaviour
         }
         else {
             _indexPlayer = 0;
+            RoundComplete?.Invoke();
         }
 
         currentPlayer = players[_indexPlayer];
@@ -106,7 +139,5 @@ public class GameLoop : MonoBehaviour
                 }
             });
         }
-
-        Debug.Log("Count business: " + currentPlayer.playerClass.businessIndex.Count);
     }
 }
