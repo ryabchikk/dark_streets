@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.XR;
 
 public enum TypePlayer
 {
@@ -14,53 +16,25 @@ public enum TypePlayer
 public class PlayerClass
 {
     public int money => Wallet.money;
-    public int countFighter { get; private set; }
+    public int CountFighter => _fighters.Values.Sum();
     public int countBusiness { get; private set; }
     public TypePlayer typePlayer { get; private set; }
-    public List<int> businessIndex { get; private set; }
     public Wallet Wallet { get; }
 
-    public PlayerClass()
-    {
-        countFighter = 0;
-        countBusiness = 0;
-        typePlayer = TypePlayer.classic;
-    }
+    private Dictionary<FighterType, int> _fighters;
 
     public PlayerClass(int money, TypePlayer typePlayer, Wallet wallet)
     {
         this.typePlayer = typePlayer;
         Wallet = wallet;
 
-        businessIndex = new List<int>();
-        this.countBusiness = 0;
-        this.countFighter = 0;
+        countBusiness = 0;
+        _fighters = new Dictionary<FighterType, int>();
     }
 
-    public bool Spend(int amount)
+    public int GetFighterCount(FighterType type)
     {
-        return Wallet.TrySpendMoney(amount);
-    }
-
-    public void SetCountFighter(int countFighter)
-    {
-        if (countFighter >= 0)
-        {
-            this.countFighter = countFighter;
-        }
-    }
-
-    public void SetCountBusiness(int countBusiness)
-    {
-        if (countBusiness >= 0)
-        {
-            this.countBusiness = countBusiness;
-        }
-    }
-
-    public void AddNewBusinessIndex(int index)
-    {
-        businessIndex.Add(index);
+        return _fighters[type];
     }
 }
 

@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
             if (_steps == 0)
             {
                 isMoving = false;
-                dice.isRolled = true;
+                //dice.isRolled = true;
             }
         }
     }
