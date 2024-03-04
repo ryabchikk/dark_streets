@@ -6,12 +6,12 @@ using UnityEngine;
 public enum TypeBusiness
 {
     //Alcohol, Weapon, Casino, Tobacco, Tote
-    Алкоголь, Оружие, Казино, Табак, Тотализатор
+    Алкоголь = 0, Оружие = 1, Казино = 2, Табак = 3, Тотализатор =4
 }
 public enum SizeBusiness
 {
     //Small, Medium, Big
-    Малый, Средний, Большой
+    Малый = 0, Средний = 1, Большой = 2
 }
 public class BusinessClass
 {   

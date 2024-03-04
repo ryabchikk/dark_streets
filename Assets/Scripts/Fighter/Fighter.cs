@@ -19,9 +19,9 @@ public class Fighter
 
     private static Dictionary<FighterType, Fighter> _fighters = new()
     {
-        [FighterType.Knuckles] = new Fighter(5, 5),
-        [FighterType.Handgun] = new Fighter(10, 10),
-        [FighterType.Machinegun] = new Fighter(15, 15)
+        [FighterType.Knuckles] = new Fighter(500, 5),
+        [FighterType.Handgun] = new Fighter(1000, 10),
+        [FighterType.Machinegun] = new Fighter(1500, 15)
     };
 
     public int Price { get; }

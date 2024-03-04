@@ -7,15 +7,27 @@ using UnityEngine.UI;
 using static UIAnimations;
 public class BusinessCard : MonoBehaviour
 {
-    [SerializeField] private Text type;
-    [SerializeField] private Text size;
-    [SerializeField] private Text price;
-    [SerializeField] private Text name;
+    [Header("Business Strings")]
+    [SerializeField] private Text typeText;
+    [SerializeField] private Text sizeText;
+    [SerializeField] private Text priceText;
+    [SerializeField] private Text nameText;
     [SerializeField] private Button buyButton;
     
+    [Space]
+    [Header ("Business Icons")]
+    [SerializeField] private Image typeIcon;
+    [SerializeField] private Image sizeIcon;
+    
+    [Space]
+    [Header ("Icons Sprites")]
+    [SerializeField] private Sprite[] typeSprites;
+    [SerializeField] private Sprite[] sizeSprites;
+
     public void ActivateBusinessCard(BusinessClass business, UnityAction buyCallback)
     {
-        UpdateStrings(business);
+        UpdateBusinessCard(business);
+        //UpdateStrings(business);
         AnimateBusinessCard();
         buyButton.onClick.AddListener(buyCallback);
         buyButton.onClick.AddListener(() =>
@@ -26,8 +38,8 @@ public class BusinessCard : MonoBehaviour
 
     public void OnSuccessfulBuy()
     {
-        // todo
         Debug.Log("Bought successfully");
+        gameObject.SetActive(false);
     }
 
     public void OnUnsuccessfulBuy()
@@ -36,12 +48,24 @@ public class BusinessCard : MonoBehaviour
         Debug.Log("Could not buy");
     }
 
+    private void UpdateBusinessCard(BusinessClass business)
+    {
+        UpdateStrings(business);
+        UpdateIcons(business);
+    }
+
+    private void UpdateIcons(BusinessClass business)
+    {
+        typeIcon.sprite = typeSprites[(int)business.type];
+        sizeIcon.sprite = sizeSprites[(int)business.size];
+    }
+
     private void UpdateStrings(BusinessClass business)
     {
-        size.text = business.size.ToString();
-        type.text = business.type.ToString();
-        price.text = business.price.ToString();
-        name.text = business.name.ToString();
+        sizeText.text = business.size.ToString();
+        typeText.text = business.type.ToString();
+        priceText.text = business.price.ToString();
+        nameText.text = business.name.ToString();
     }
     
     private void AnimateBusinessCard()

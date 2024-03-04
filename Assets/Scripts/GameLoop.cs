@@ -69,10 +69,10 @@ public class GameLoop : MonoBehaviour
     }
 
     // Callback for UI button
-    public void BuyFighter(int typeNum, int amount)
+    public void BuyFighter(int typeNum)
     {
         var type = (FighterType)typeNum;
-        if (currentPlayer.playerClass.TryBuy(_fighterMarket, type, amount))
+        if (currentPlayer.playerClass.TryBuy(_fighterMarket, type,1))
         {
             // todo
         }
