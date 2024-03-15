@@ -13,24 +13,24 @@ public class ButtonMethods : MonoBehaviour
     {
         panel.SetActive(true);
     }
+    
     public void ClosePanel(GameObject panel)
     {
         panel.SetActive(false);
     }
-    public void LoadMenu()
+
+    public void LoadScene(int numberScene)
     {
-        SceneManager.LoadScene(0);
-        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(numberScene);
     }
 
-    public void OpenPause(GameObject panel)
+    public void ActivatePause()
     {
-        panel.SetActive(true);
         Time.timeScale = 0.0f;
     }
-    public void Resume(GameObject panel)
+
+    public void Resume()
     {
-        panel.SetActive(false);
         Time.timeScale = 1.0f;
     }
 }

@@ -12,7 +12,8 @@ public class Player : MonoBehaviour
     
     [Header("Components player")]
     public PlayerMovement playerMovement;
-
+    public Material playerMaterial;
+    
     [HideInInspector]
     public PlayerClass playerClass;
 

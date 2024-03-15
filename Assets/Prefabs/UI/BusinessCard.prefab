@@ -1309,8 +1309,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e518be6d9906be14d9e312be63091d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: {fileID: 3144780019583288983}
-  size: {fileID: 2044571344443932634}
-  price: {fileID: 6492553370778647156}
-  name: {fileID: 8329439578623057691}
+  typeText: {fileID: 3144780019583288983}
+  sizeText: {fileID: 2044571344443932634}
+  priceText: {fileID: 6492553370778647156}
+  nameText: {fileID: 8329439578623057691}
   buyButton: {fileID: 391339390135097250}
+  typeIcon: {fileID: 6649748739043003632}
+  sizeIcon: {fileID: 7784840836061399639}
+  typeSprites:
+  - {fileID: 21300000, guid: 2eee56847437d0d4b97b318a3fa02941, type: 3}
+  - {fileID: 21300000, guid: 7f24f297a47547a41b595881f976a085, type: 3}
+  - {fileID: 21300000, guid: 0b618b7b504050548bd36c081cca5050, type: 3}
+  - {fileID: 21300000, guid: f6d17cf8a0a33574caa277c8fd61c202, type: 3}
+  - {fileID: 21300000, guid: f540701f9defa964abc9730d1d7ab700, type: 3}
+  sizeSprites:
+  - {fileID: 21300000, guid: fb7517684a9ce0447b563d7f54c3b912, type: 3}
+  - {fileID: 21300000, guid: fce29d8c0cd24b546ad823d5807d9452, type: 3}
+  - {fileID: 21300000, guid: 4cb1b8c155b132841b5917504df4a5c7, type: 3}
