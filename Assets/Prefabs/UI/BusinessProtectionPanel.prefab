@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5411136993243395225}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1261539240499533007}
+        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
+        m_MethodName: AddFighter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &187525402242623717
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +620,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 889822036718931088}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1261539240499533007}
+        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
+        m_MethodName: RemoveFighter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1316831494098333168
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,7 +1021,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1525976193168865073}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1261539240499533007}
+        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
+        m_MethodName: AddFighter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2683976548291216958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,7 +1229,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6731097340545585065}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1261539240499533007}
+        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
+        m_MethodName: RemoveFighter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3253043742441980873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,6 +1857,7 @@ GameObject:
   - component: {fileID: 7750460263353330133}
   - component: {fileID: 6127126544198100819}
   - component: {fileID: 1874288762740504359}
+  - component: {fileID: 1261539240499533007}
   m_Layer: 0
   m_Name: BusinessProtectionPanel
   m_TagString: Untagged
@@ -1882,6 +1931,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1261539240499533007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811868265220872531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b69ef6f2054a3ab18574601acf048b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knucklesText: {fileID: 1966180419016528877}
+  handgunText: {fileID: 1632549182004650257}
+  machinegunText: {fileID: 8607870450763117738}
+  defendersCount: {fileID: 7781659778585856587}
 --- !u!1 &5829601314565426889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2003,10 +2068,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Wallet, Assembly-CSharp
-        m_MethodName: AddMoney
-        m_Mode: 3
+      - m_Target: {fileID: 1261539240499533007}
+        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
+        m_MethodName: Defend
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2135,7 +2200,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 640964041411627233}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1261539240499533007}
+        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
+        m_MethodName: AddFighter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7027026297341225906
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,7 +2621,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6449212136421442549}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1261539240499533007}
+        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
+        m_MethodName: RemoveFighter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8008522016149860127
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Business;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -44,6 +45,7 @@ public class PlayerBusinessCard : BusinessCardBase
 
     public void OpenDefenceCard()
     {
+        defenceCard.GetComponent<DefenceCard>().ActivateBusinessCard(_currentBusiness);
         defenceCard.SetActive(true);
         gameObject.SetActive(false);
     }

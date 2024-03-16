@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -20,6 +22,7 @@ public class PlayerClass
     public int countBusiness { get; private set; }
     public TypePlayer typePlayer { get; private set; }
     public Wallet Wallet { get; }
+    public event Action FightersChanged; 
 
     private Dictionary<FighterType, int> _fighters;
 
@@ -44,18 +47,23 @@ public class PlayerClass
             return false;
         
         Wallet.TrySpendMoney(price * amount);
-        
-        if (_fighters.ContainsKey(type))
-        {
-            _fighters[type] += amount;
-        }
-        else
-        {
-            _fighters.Add(type, amount);
-        }
+        AddFighters(type, amount);
         market.TryBuy(type, amount);
         
         return true;
+    }
+
+    public void AddFighters(FighterType type, int count)
+    {
+        if (_fighters.ContainsKey(type))
+        {
+            _fighters[type] += count;
+        }
+        else
+        {
+            _fighters.Add(type, count);
+        }
+        FightersChanged?.Invoke();
     }
 
     public bool TrySetDefenders(FighterType type, int count)
@@ -66,6 +74,7 @@ public class PlayerClass
         }
 
         _fighters[type] -= count;
+        FightersChanged?.Invoke();
         return true;
     }
 }

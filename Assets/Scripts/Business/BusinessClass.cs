@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum TypeBusiness
@@ -25,11 +26,12 @@ public class BusinessClass
     public string Name { get; private set; }
     public int Lvl { get; private set; }
     public PlayerClass Owner { get; private set; }
+    public int DefendersCount => _defenders.Values.Sum();
     public event Action<BusinessClass, PlayerClass> BusinessBought;
     public event Action<BusinessClass, PlayerClass> BusinessSold;
     public event Action LevelChanged;
 
-    private Dictionary<FighterType, int> _defenders;
+    private Dictionary<FighterType, int> _defenders = new();
 
     public BusinessClass(int buyPrice, string name, SizeBusiness size, TypeBusiness type)
     {
@@ -72,6 +74,14 @@ public class BusinessClass
     {
         Owner.Wallet.AddMoney(BuyPrice);
         var oldOwner = Owner;
+        
+        Owner.AddFighters(FighterType.Knuckles, GetDefendersCount(FighterType.Knuckles));
+        _defenders[FighterType.Knuckles] = 0;
+        Owner.AddFighters(FighterType.Handgun, GetDefendersCount(FighterType.Handgun));
+        _defenders[FighterType.Handgun] = 0;
+        Owner.AddFighters(FighterType.Machinegun, GetDefendersCount(FighterType.Machinegun));
+        _defenders[FighterType.Machinegun] = 0;
+        
         Owner = null;
         Lvl = 0;
         BusinessSold?.Invoke(this, oldOwner);
@@ -102,12 +112,19 @@ public class BusinessClass
     
     public int GetDefendersCount(FighterType type)
     {
-        return _defenders.TryGetValue(type, out var count) ? count : 0;
+        _defenders.TryAdd(type, 0);
+
+        return _defenders[type];
     }
 
     public bool TryAddDefenders(FighterType type, int count)
     {
-        if (Owner.TrySetDefenders(type, count))
+        if (DefendersCount >= 5)
+        {
+            return false;
+        }
+        
+        if (!Owner.TrySetDefenders(type, count))
         {
             return false;
         }
@@ -121,6 +138,19 @@ public class BusinessClass
             _defenders.Add(type, count);
         }
 
+        return true;
+    }
+
+    public bool TryRemoveDefenders(FighterType type, int count)
+    {
+        if (GetDefendersCount(type) < count)
+        {
+            return false;
+        }
+
+        _defenders[type] -= count;
+        
+        Owner.AddFighters(type, count);
         return true;
     }
 
