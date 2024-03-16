@@ -15,34 +15,30 @@ public enum SizeBusiness
 }
 public class BusinessClass
 {   
-    public int price { get; private set; }
-    public int pumpingPrice { get; private set; }
-    public int passiveIncome { get; private set; }
-    public int priceForCellPass { get; private set; }
-    public SizeBusiness size { get; private set; }
-    public TypeBusiness type { get; private set; }
-    public string name { get; private set; }
-    public int lvl { get; private set; }
+    public int BuyPrice { get; }
+    public int SellPrice => BuyPrice;  // Todo change
+    public int UpgradePrice => (BuyPrice / 10) * 2;
+    public int PassiveIncome => Lvl != 0 ? BuyPrice / 10 + 100 * Lvl : 0;
+    public int PriceForCellPass => PassiveIncome / 2 + BuyPrice / 2;
+    public SizeBusiness Size { get; private set; }
+    public TypeBusiness Type { get; private set; }
+    public string Name { get; private set; }
+    public int Lvl { get; private set; }
     public PlayerClass Owner { get; private set; }
     public event Action<BusinessClass, PlayerClass> BusinessBought;
-    public event Action<BusinessClass, PlayerClass> BusinessSold; 
+    public event Action<BusinessClass, PlayerClass> BusinessSold;
+    public event Action LevelChanged;
 
-    public BusinessClass(int price, string name, SizeBusiness size, TypeBusiness type)
+    private Dictionary<FighterType, int> _defenders;
+
+    public BusinessClass(int buyPrice, string name, SizeBusiness size, TypeBusiness type)
     {
-        this.price = price;
-        this.size = size;
-        this.type = type;
-        this.name = name;
-        this.lvl = 0;
-
-        SetPassiveIncome();
-        SetPumpingPrice();
-        SetPriceForCellPass();
+        BuyPrice = buyPrice;
+        Size = size;
+        Type = type;
+        Name = name;
+        Lvl = 0;
     }
-
-    public void SetPassiveIncome() { passiveIncome = CalculatePassiveIncome(); }
-    public void SetPumpingPrice() {  pumpingPrice = CalculatePumpingPrice(); }
-    public void SetPriceForCellPass() { priceForCellPass = CalculatePriceForCellPass(); }
 
     public bool SetOwner(PlayerClass player)
     {
@@ -57,8 +53,15 @@ public class BusinessClass
 
     public bool TryBuy(PlayerClass player)
     {
-        if (!player.Wallet.TrySpendMoney(price))
+        if (!IsAvailableToBuy())
+        {
             return false;
+        }
+        
+        if (!player.Wallet.TrySpendMoney(BuyPrice))
+        {
+            return false;
+        }
         
         SetOwner(player);
         BusinessBought?.Invoke(this, player);
@@ -67,48 +70,72 @@ public class BusinessClass
 
     public void Sell()
     {
-        Owner.Wallet.AddMoney(price);
+        Owner.Wallet.AddMoney(BuyPrice);
         var oldOwner = Owner;
         Owner = null;
+        Lvl = 0;
         BusinessSold?.Invoke(this, oldOwner);
     }
 
     public bool TryUpgrade()
     {
-        if (!Owner.Wallet.TrySpendMoney(pumpingPrice))
+        if (!IsAvailableToUpgrade())
             return false;
-        if (lvl >= 5)
+        if (!Owner.Wallet.TrySpendMoney(UpgradePrice))
             return false;
-        
-        ++lvl;
+
+        ++Lvl;
+        LevelChanged?.Invoke();
         return true;
     }
 
     public bool TryDowngrade()
     {
-        if (lvl <= 1)
+        if (!IsAvailableToDowngrade())
             return false;
         
-        Owner.Wallet.AddMoney(pumpingPrice);
+        Owner.Wallet.AddMoney(UpgradePrice);
+        --Lvl;
+        LevelChanged?.Invoke();
+        return true;
+    }
+    
+    public int GetDefendersCount(FighterType type)
+    {
+        return _defenders.TryGetValue(type, out var count) ? count : 0;
+    }
+
+    public bool TryAddDefenders(FighterType type, int count)
+    {
+        if (Owner.TrySetDefenders(type, count))
+        {
+            return false;
+        }
+        
+        if (_defenders.ContainsKey(type))
+        {
+            _defenders[type] += count;
+        }
+        else
+        {
+            _defenders.Add(type, count);
+        }
+
         return true;
     }
 
-    public bool IsAvailableToUpgrade()
+    private bool IsAvailableToUpgrade()
     {
-        return lvl < 5;
+        return Lvl < 5;
     }
 
-    public bool IsAvailableToDowngrade()
+    private bool IsAvailableToDowngrade()
     {
-        return lvl >= 1;
+        return Lvl > 0;
     }
 
-    public bool IsAvailableToBuy()
+    private bool IsAvailableToBuy()
     {
         return Owner is null;
     }
-    
-    private int CalculatePassiveIncome() => lvl != 0 ? (price / 10) + (100 * lvl) : 0;
-    private int CalculatePumpingPrice() => (price / 10) * 2;
-    private int CalculatePriceForCellPass() => passiveIncome / 2 + price / 2;
 }

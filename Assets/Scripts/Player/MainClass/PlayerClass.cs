@@ -34,7 +34,7 @@ public class PlayerClass
 
     public int GetFighterCount(FighterType type)
     {
-        return _fighters[type];
+        return _fighters.TryGetValue(type, out var count) ? count : 0;
     }
 
     public bool TryBuy(FighterMarket market, FighterType type, int amount)
@@ -44,7 +44,6 @@ public class PlayerClass
             return false;
         
         Wallet.TrySpendMoney(price * amount);
-        market.TryBuy(type, amount);
         
         if (_fighters.ContainsKey(type))
         {
@@ -54,6 +53,19 @@ public class PlayerClass
         {
             _fighters.Add(type, amount);
         }
+        market.TryBuy(type, amount);
+        
+        return true;
+    }
+
+    public bool TrySetDefenders(FighterType type, int count)
+    {
+        if (GetFighterCount(type) < count)
+        {
+            return false;
+        }
+
+        _fighters[type] -= count;
         return true;
     }
 }

@@ -1,61 +1,73 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using static UIAnimations;
-public class BusinessCard : BusinessCardBase
+
+public class PlayerBusinessCard : BusinessCardBase
 {
     [Header("Business Strings")]
     [SerializeField] private Text typeText;
     [SerializeField] private Text sizeText;
     [SerializeField] private Text priceText;
     [SerializeField] private Text nameText;
-    [SerializeField] private Button buyButton;
+    [SerializeField] private TextMeshProUGUI levelText;
     
     [Space]
     [Header ("Business Icons")]
     [SerializeField] private Image typeIcon;
     [SerializeField] private Image sizeIcon;
     
+    [Space] 
+    [Header("Objects")] 
+    [SerializeField] private GameObject defenceCard;
+    
     [Space]
     [Header ("Icons Sprites")]
     [SerializeField] private Sprite[] typeSprites;
     [SerializeField] private Sprite[] sizeSprites;
 
-    public void ActivateBusinessCard(BusinessClass business, UnityAction buyCallback)
-    {
-        ActivateBusinessCard(business);
-        buyButton.onClick.AddListener(buyCallback);
-        buyButton.onClick.AddListener(() =>
-        {
-            buyButton.onClick.RemoveAllListeners();
-        });
-    }
-
     protected override void ActivateBusinessCardImpl()
     {
-        UpdateBusinessCard(_currentBusiness);
+        UpdateBusinessCard();
         AnimateBusinessCard();
+        _currentBusiness.LevelChanged += UpdateBusinessCard;
     }
 
-    public void OnSuccessfulBuy()
+    private void OnDisable()
     {
-        Debug.Log("Bought successfully");
+        _currentBusiness.LevelChanged -= UpdateBusinessCard;
+    }
+
+    public void OpenDefenceCard()
+    {
+        defenceCard.SetActive(true);
         gameObject.SetActive(false);
     }
 
-    public void OnUnsuccessfulBuy()
+    public void Sell()
     {
-        // todo
-        Debug.Log("Could not buy");
+        _currentBusiness.Sell();
+        gameObject.SetActive(false);
     }
 
-    private void UpdateBusinessCard(BusinessClass business)
+    public void Upgrade()
     {
-        UpdateStrings(business);
-        UpdateIcons(business);
+        _currentBusiness.TryUpgrade();
+    }
+
+    public void Downgrade()
+    {
+        _currentBusiness.TryDowngrade();
+    }
+
+    private void UpdateBusinessCard()
+    {
+        UpdateStrings(_currentBusiness);
+        UpdateIcons(_currentBusiness);
     }
 
     private void UpdateIcons(BusinessClass business)
@@ -68,8 +80,9 @@ public class BusinessCard : BusinessCardBase
     {
         sizeText.text = business.Size.ToString();
         typeText.text = business.Type.ToString();
-        priceText.text = business.BuyPrice.ToString();
-        nameText.text = business.Name.ToString();
+        priceText.text = business.SellPrice.ToString();
+        nameText.text = business.Name;
+        levelText.text = business.Lvl.ToString();
     }
     
     private void AnimateBusinessCard()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,13 +15,19 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private BusinessCard card;
     [SerializeField] private WalletView walletView;
     [SerializeField] private Button switchTurnButton;
+    [SerializeField] private TextMeshProUGUI playerNameText;
 
     public event Action RoundComplete;
+    public event Action TurnTransfered;
+    public event Action AnyBusinessBought;
+    public event Action AnyBusinessSold;
+    public FighterMarket FighterMarket { get; } = new();
+    public PlayerClass PlayerModel => _currentPlayer.playerClass;
     
-    private Player currentPlayer;
+    private Player _currentPlayer;
     private int _indexPlayer = 0;
     private int _steps = 0;
-    private FighterMarket _fighterMarket = new();
+    
 
     private void Start()
     {
@@ -29,20 +36,35 @@ public class GameLoop : MonoBehaviour
             player.playerMovement.listNodesTransform = map.GetListNodesTransform();
         }
 
-        currentPlayer = players[_indexPlayer];
-        walletView.SetCurrentWallet(currentPlayer.playerClass.Wallet);
+        for (int i = 0; i < map.GetListNodes().Count; i++)
+        {
+            var business = map.GetBusinessAt(i);
+            if (business is not null)
+            {
+                business.businessClass.BusinessSold += (_, _) =>
+                {
+                    business.BusinessColorRenderer.material = business.DefaultMaterial;
+                    AnyBusinessSold?.Invoke();
+                };
+            }
+        }
+
+        _currentPlayer = players[_indexPlayer];
+        walletView.SetCurrentWallet(_currentPlayer.playerClass.Wallet);
+        playerNameText.text = _currentPlayer.Name;
     }
 
     // For debug
     public void AddMoneyToCurrentPlayer()
     {
-        currentPlayer.playerClass.Wallet.AddMoney(1000);
+        _currentPlayer.playerClass.Wallet.AddMoney(1000);
     }
 
     private void FixedUpdate()
     {
-        if (currentPlayer.playerMovement.isMoving) { 
-            currentPlayer.playerMovement.MovePlayer(ref _steps);
+        if (_currentPlayer.playerMovement.isMoving) { 
+            switchTurnButton.enabled = false;
+            _currentPlayer.playerMovement.MovePlayer(ref _steps);
             CheckZeroSteps();
         }
         else {
@@ -66,13 +88,15 @@ public class GameLoop : MonoBehaviour
         UpdateCurrentPlayer();
         dice.isRolled = true;
         switchTurnButton.enabled = false;
+        playerNameText.text = _currentPlayer.Name;
+        TurnTransfered?.Invoke();
     }
 
     // Callback for UI button
     public void BuyFighter(int typeNum)
     {
         var type = (FighterType)typeNum;
-        if (currentPlayer.playerClass.TryBuy(_fighterMarket, type,1))
+        if (_currentPlayer.playerClass.TryBuy(FighterMarket, type,1))
         {
             // todo
         }
@@ -89,14 +113,14 @@ public class GameLoop : MonoBehaviour
             .Select(node => node.GetComponent<BusinessController>())
             .Where(controller => controller is not null)
             .Select(controller => controller.businessClass)
-            .Where(business => business.Owner == currentPlayer.playerClass);
+            .Where(business => business.Owner == _currentPlayer.playerClass);
     }
 
     private void StartMovingPlayer()
     {
         dice.isRolled = false;
         _steps = dice.finalSide;
-        currentPlayer.playerMovement.isMoving = true;
+        _currentPlayer.playerMovement.isMoving = true;
         //currentPlayer.playerClass.Spend(1000);
     }
 
@@ -110,8 +134,8 @@ public class GameLoop : MonoBehaviour
             RoundComplete?.Invoke();
         }
 
-        currentPlayer = players[_indexPlayer];
-        walletView.SetCurrentWallet(currentPlayer.playerClass.Wallet);
+        _currentPlayer = players[_indexPlayer];
+        walletView.SetCurrentWallet(_currentPlayer.playerClass.Wallet);
     }
 
     private void CheckZeroSteps()
@@ -119,7 +143,7 @@ public class GameLoop : MonoBehaviour
         if (_steps != 0) 
             return;
         
-        var businessController = map.GetBusinessAt(currentPlayer.playerMovement.currentIndex);
+        var businessController = map.GetBusinessAt(_currentPlayer.playerMovement.currentIndex);
         if (businessController is null)
         {
             return;
@@ -129,9 +153,11 @@ public class GameLoop : MonoBehaviour
         {
             card.ActivateBusinessCard(businessController.businessClass, () =>
             {
-                if (businessController.businessClass.TryBuy(currentPlayer.playerClass))
+                if (businessController.businessClass.TryBuy(_currentPlayer.playerClass))
                 {
+                    businessController.BusinessColorRenderer.material = _currentPlayer.playerMaterial;
                     card.OnSuccessfulBuy();
+                    AnyBusinessBought?.Invoke();
                 }
                 else
                 {

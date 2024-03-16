@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int money;
     [SerializeField] private TypePlayer typePlayer;
     [SerializeField] private Wallet wallet;
+    [SerializeField] private string name;
     
     [Header("Components player")]
     public PlayerMovement playerMovement;
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
     
     [HideInInspector]
     public PlayerClass playerClass;
+    public string Name => name;
 
     public void Awake()
     {

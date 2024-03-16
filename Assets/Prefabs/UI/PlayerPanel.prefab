@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 5544381396516353418}
   - component: {fileID: 698001012409641024}
   - component: {fileID: 4465208949098471856}
+  - component: {fileID: 5808878861863700081}
   m_Layer: 0
   m_Name: PlayerPanel
   m_TagString: Untagged
@@ -308,6 +309,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountView: {fileID: 6196469304134643463}
+--- !u!114 &5808878861863700081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2990633810929607311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b906ef44e234a2a48895091c0a8b209f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knucklesCountText: {fileID: 7435374058183264097}
+  handgunCountText: {fileID: 6149330476521058782}
+  machinegunCountText: {fileID: 4226881863060792729}
+  gameLoop: {fileID: 0}
 --- !u!1 &3019814243459867125
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,8 +30,6 @@ public class Wallet : MonoBehaviour
             money -= amount;
             AmountChanged?.Invoke();
         }
-        
-        Debug.Log($"Spend Money {money}");
 
         return isEnough;
     }
