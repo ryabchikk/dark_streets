@@ -6,6 +6,7 @@ public class FighterMarket
 {
     // Type of fighter been bought, amount been bought, amount remaining
     public event Action<FighterType, int, int> FighterBought;
+    public event Action AnyFighterBought;
     
     private Dictionary<FighterType, int> _remainings = new()
     {
@@ -21,6 +22,7 @@ public class FighterMarket
         
         _remainings[type] -= amount;
         FighterBought?.Invoke(type, amount, GetFightersRemaining(type));
+        AnyFighterBought?.Invoke();
         return true;
     }
 
