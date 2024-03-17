@@ -9,6 +9,7 @@ public class AllBusinessesUI : MonoBehaviour
     [SerializeField] private GameLoop gameLoop;
     [SerializeField] private GameObject miniCardPrefab;
     [SerializeField] private GameObject playerBusinessCard;
+    [SerializeField] private GameObject defenceCard;
 
     private List<BusinessMiniCard> _miniCardInstances = new();
 
@@ -47,7 +48,7 @@ public class AllBusinessesUI : MonoBehaviour
             {
                 var go = Instantiate(miniCardPrefab, transform);
                 _miniCardInstances.Add(go.GetComponent<BusinessMiniCard>());
-                _miniCardInstances[i].Init(playerBusinessCard);
+                _miniCardInstances[i].Init(playerBusinessCard, defenceCard);
                 Align(go, i);
             }
             

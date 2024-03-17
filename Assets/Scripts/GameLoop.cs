@@ -16,6 +16,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private WalletView walletView;
     [SerializeField] private Button switchTurnButton;
     [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private PayButton payButton;
 
     public event Action RoundComplete;
     public event Action TurnTransfered;
@@ -164,6 +165,10 @@ public class GameLoop : MonoBehaviour
                     card.OnUnsuccessfulBuy();
                 }
             });
+        } 
+        else if (businessController.businessClass.Owner != PlayerModel)
+        {
+            payButton.Init(PlayerModel, businessController.businessClass);
         }
     }
 }

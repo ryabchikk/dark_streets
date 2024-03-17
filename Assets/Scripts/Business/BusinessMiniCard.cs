@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Business;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,10 +24,12 @@ public class BusinessMiniCard : MonoBehaviour
 
     private BusinessClass _currentBusiness;
     private PlayerBusinessCard _playerBusinessCard;
+    private GameObject _defenceCard;
 
-    public void Init(GameObject playerBusinessCard)
+    public void Init(GameObject playerBusinessCard, GameObject defenceCard)
     {
         _playerBusinessCard = playerBusinessCard.GetComponent<PlayerBusinessCard>();
+        _defenceCard = defenceCard;
     }
     
     public void UpdateBusinessMiniCard(BusinessClass business)
@@ -51,6 +54,12 @@ public class BusinessMiniCard : MonoBehaviour
     {
         _playerBusinessCard.ActivateBusinessCard(_currentBusiness);
         _playerBusinessCard.gameObject.SetActive(true);
+    }
+
+    public void OpenDefenceCard()
+    {
+        _defenceCard.GetComponent<DefenceCard>().ActivateBusinessCard(_currentBusiness);
+        _defenceCard.SetActive(true);
     }
 
     public void Upgrade()
