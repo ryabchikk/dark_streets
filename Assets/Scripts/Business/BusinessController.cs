@@ -14,12 +14,13 @@ public class BusinessController : MonoBehaviour
     [HideInInspector]
     public BusinessClass businessClass;
     public Renderer BusinessColorRenderer { get; private set; }
+    public Renderer[] BusinesColorChildsRenderers {  get; private set; }
     public Material DefaultMaterial => defaultMaterial;
 
     private void Awake()
     {
         businessClass = new BusinessClass(price, nameBusiness, size, type);
         BusinessColorRenderer = businessColorObject.GetComponent<Renderer>();
+        BusinesColorChildsRenderers = businessColorObject.GetComponentsInChildren<Renderer>();
     }
-
 }

@@ -45,6 +45,7 @@ public class GameLoop : MonoBehaviour
                 business.businessClass.BusinessSold += (_, _) =>
                 {
                     business.BusinessColorRenderer.material = business.DefaultMaterial;
+                    ChangeChildBusinessColor(business, business.DefaultMaterial);
                     AnyBusinessSold?.Invoke();
                 };
             }
@@ -122,7 +123,6 @@ public class GameLoop : MonoBehaviour
         dice.isRolled = false;
         _steps = dice.finalSide;
         _currentPlayer.playerMovement.isMoving = true;
-        //currentPlayer.playerClass.Spend(1000);
     }
 
     private void UpdateCurrentPlayer()
@@ -144,7 +144,7 @@ public class GameLoop : MonoBehaviour
         if (_steps != 0) 
             return;
         
-        var businessController = map.GetBusinessAt(_currentPlayer.playerMovement.currentIndex);
+        BusinessController businessController = map.GetBusinessAt(_currentPlayer.playerMovement.currentIndex);
         if (businessController is null)
         {
             return;
@@ -157,6 +157,7 @@ public class GameLoop : MonoBehaviour
                 if (businessController.businessClass.TryBuy(_currentPlayer.playerClass))
                 {
                     businessController.BusinessColorRenderer.material = _currentPlayer.playerMaterial;
+                    ChangeChildBusinessColor(businessController, _currentPlayer.playerMaterial);
                     card.OnSuccessfulBuy();
                     AnyBusinessBought?.Invoke();
                 }
@@ -171,4 +172,13 @@ public class GameLoop : MonoBehaviour
             payButton.Init(PlayerModel, businessController.businessClass);
         }
     }
+
+    private void ChangeChildBusinessColor(BusinessController businessController, Material material)
+    {
+        for(int i = 0; i < businessController.BusinesColorChildsRenderers.Length; i++)
+        {
+            businessController.BusinesColorChildsRenderers[i].material = material;
+        }
+    }
+    
 }
