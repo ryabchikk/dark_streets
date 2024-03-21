@@ -49,9 +49,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 650ff57fd63d1bb4bbc8e320bb0cc80a, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 650ff57fd63d1bb4bbc8e320bb0cc80a, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 650ff57fd63d1bb4bbc8e320bb0cc80a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4cc303ffdaba1fb40a55e785085b6d1f, type: 2}
+      objectReference: {fileID: 2100000, guid: f9f808cc11d692946848763c42fc35cf, type: 2}
     - target: {fileID: 919132149155446097, guid: 650ff57fd63d1bb4bbc8e320bb0cc80a, type: 3}
       propertyPath: m_Name
       value: Props_Street Light

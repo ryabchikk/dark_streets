@@ -44,8 +44,8 @@ public class GameLoop : MonoBehaviour
             {
                 business.businessClass.BusinessSold += (_, _) =>
                 {
-                    business.BusinessNeutralColor.material = business.DefaultMaterial;
-                    ChangeChildBusinessColor(business, business.DefaultMaterial);
+                    business.ChangeBusinessColors(business.DefaultLightMaterial, business.DefaultNeutralMaterial);
+                    
                     AnyBusinessSold?.Invoke();
                 };
             }
@@ -156,8 +156,7 @@ public class GameLoop : MonoBehaviour
             {
                 if (businessController.businessClass.TryBuy(_currentPlayer.playerClass))
                 {
-                    businessController.BusinessNeutralColor.material = _currentPlayer.playerMaterial;
-                    ChangeChildBusinessColor(businessController, _currentPlayer.playerMaterial);
+                    businessController.ChangeBusinessColors(_currentPlayer.playerLightMaterial, _currentPlayer.playerNeutralMaterial);
                     card.OnSuccessfulBuy();
                     AnyBusinessBought?.Invoke();
                 }
@@ -172,13 +171,4 @@ public class GameLoop : MonoBehaviour
             payButton.Init(PlayerModel, businessController.businessClass);
         }
     }
-
-    private void ChangeChildBusinessColor(BusinessController businessController, Material material)
-    {
-        for(int i = 0; i < businessController.BusinesNeutralColorChilds.Length; i++)
-        {
-            businessController.BusinesNeutralColorChilds[i].material = material;
-        }
-    }
-    
 }
