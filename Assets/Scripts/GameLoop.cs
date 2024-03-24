@@ -88,6 +88,7 @@ public class GameLoop : MonoBehaviour
 
     public void SwitchTurn()
     {
+        card.gameObject.SetActive(false);
         switchTurnButton.gameObject.SetActive(false);
         UpdateCurrentPlayer();
         dice.isRolled = true;
