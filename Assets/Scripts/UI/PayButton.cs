@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PayButton : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI text;
     private PlayerClass _currentPlayer;
     private BusinessClass _business;
 
@@ -11,6 +13,7 @@ public class PayButton : MonoBehaviour
     {
         _currentPlayer = currentPlayer;
         _business = business;
+        text.text = $"ПЛОТИ {business.PriceForCellPass}";
         gameObject.SetActive(true); 
     }
 

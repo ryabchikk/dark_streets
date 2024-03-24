@@ -28,6 +28,7 @@ public class GameLoop : MonoBehaviour
     private Player _currentPlayer;
     private int _indexPlayer = 0;
     private int _steps = 0;
+    private int _prevIndex;
     
 
     private void Start()
@@ -87,10 +88,12 @@ public class GameLoop : MonoBehaviour
 
     public void SwitchTurn()
     {
+        switchTurnButton.gameObject.SetActive(false);
         UpdateCurrentPlayer();
         dice.isRolled = true;
         switchTurnButton.enabled = false;
         playerNameText.text = _currentPlayer.Name;
+        _prevIndex = _currentPlayer.playerMovement.currentIndex;
         TurnTransfered?.Invoke();
     }
 
@@ -110,12 +113,17 @@ public class GameLoop : MonoBehaviour
 
     public IEnumerable<BusinessClass> GetBusinessesForCurrentPlayer()
     {
+        return GetBusinessesFor(_currentPlayer.playerClass);
+    }
+
+    private IEnumerable<BusinessClass> GetBusinessesFor(PlayerClass player)
+    {
         return map
             .GetListNodes()
             .Select(node => node.GetComponent<BusinessController>())
             .Where(controller => controller is not null)
             .Select(controller => controller.businessClass)
-            .Where(business => business.Owner == _currentPlayer.playerClass);
+            .Where(business => business.Owner == player);
     }
 
     private void StartMovingPlayer()
@@ -144,6 +152,18 @@ public class GameLoop : MonoBehaviour
         if (_steps != 0) 
             return;
         
+        switchTurnButton.gameObject.SetActive(true);
+
+        if (_prevIndex > _currentPlayer.playerMovement.currentIndex)
+        {
+            Debug.Log("Wrap around");
+            foreach (var businessClass in GetBusinessesForCurrentPlayer())
+            {
+                Debug.Log($"Business {businessClass.Name} passive {businessClass.PassiveIncome}");
+                businessClass.Owner.Wallet.AddMoney(businessClass.PassiveIncome);
+            }
+        }
+        
         BusinessController businessController = map.GetBusinessAt(_currentPlayer.playerMovement.currentIndex);
         if (businessController is null)
         {
@@ -158,6 +178,14 @@ public class GameLoop : MonoBehaviour
                 {
                     businessController.ChangeBusinessColors(_currentPlayer.playerLightMaterial, _currentPlayer.playerNeutralMaterial);
                     card.OnSuccessfulBuy();
+                    
+                    businessController
+                        .businessClass
+                        .SetOwnerSameTypeBusinessesCountCallback(
+                            () => GetBusinessesFor(_currentPlayer.playerClass).Count(business => business.Type == businessController.businessClass.Type)
+                            );
+
+                    businessController.businessClass.BusinessSold += OnBusinessSold;
                     AnyBusinessBought?.Invoke();
                 }
                 else
@@ -170,5 +198,10 @@ public class GameLoop : MonoBehaviour
         {
             payButton.Init(PlayerModel, businessController.businessClass);
         }
+    }
+
+    private void OnBusinessSold(BusinessClass business, PlayerClass _)
+    {
+        business.SetOwnerSameTypeBusinessesCountCallback(null);
     }
 }

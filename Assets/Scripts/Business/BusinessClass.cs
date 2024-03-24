@@ -19,7 +19,7 @@ public class BusinessClass
     public int BuyPrice { get; }
     public int SellPrice => BuyPrice;  // Todo change
     public int UpgradePrice => (BuyPrice / 10) * 2;
-    public int PassiveIncome => Lvl != 0 ? BuyPrice / 10 + 100 * Lvl : 0;
+    public int PassiveIncome => BuyPrice / 10 * (OwnerSameTypeBusinessesCount - 1) + (Lvl != 0 ? BuyPrice / 10 + 100 * Lvl : 0);
     public int PriceForCellPass => PassiveIncome / 2 + BuyPrice / 2;
     public SizeBusiness Size { get; private set; }
     public TypeBusiness Type { get; private set; }
@@ -31,7 +31,10 @@ public class BusinessClass
     public event Action<BusinessClass, PlayerClass> BusinessSold;
     public event Action LevelChanged;
 
+    private int OwnerSameTypeBusinessesCount => _getOwnerBusinessCount?.Invoke() ?? 0;
+
     private Dictionary<FighterType, int> _defenders = new();
+    private Func<int> _getOwnerBusinessCount;
 
     public BusinessClass(int buyPrice, string name, SizeBusiness size, TypeBusiness type)
     {
@@ -85,6 +88,11 @@ public class BusinessClass
         Owner = null;
         Lvl = 0;
         BusinessSold?.Invoke(this, oldOwner);
+    }
+
+    public void SetOwnerSameTypeBusinessesCountCallback(Func<int> callback)
+    {
+        _getOwnerBusinessCount = callback;
     }
 
     public bool TryUpgrade()
