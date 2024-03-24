@@ -196,7 +196,8 @@ public class GameLoop : MonoBehaviour
         } 
         else if (businessController.businessClass.Owner != PlayerModel)
         {
-            payButton.Init(PlayerModel, businessController.businessClass);
+            switchTurnButton.gameObject.SetActive(false);
+            payButton.Init(PlayerModel, businessController.businessClass, () => switchTurnButton.gameObject.SetActive(true));
         }
     }
 
