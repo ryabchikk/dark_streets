@@ -6,7 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using static UIAnimations;
 public class GameLoop : MonoBehaviour
 {
     [SerializeField] private Player[] players;
@@ -29,13 +29,21 @@ public class GameLoop : MonoBehaviour
     private int _indexPlayer = 0;
     private int _steps = 0;
     private int _prevIndex;
-    
 
+    private void Awake()
+    {
+        foreach (Player player in players)
+        {
+            player.playerClass.Wallet.AddMoney(20000);
+        }
+       
+    }
     private void Start()
     {
         foreach (Player player in players) 
         { 
             player.playerMovement.listNodesTransform = map.GetListNodesTransform();
+            
         }
 
         for (int i = 0; i < map.GetListNodes().Count; i++)
@@ -55,6 +63,7 @@ public class GameLoop : MonoBehaviour
         _currentPlayer = players[_indexPlayer];
         walletView.SetCurrentWallet(_currentPlayer.playerClass.Wallet);
         playerNameText.text = _currentPlayer.Name;
+        Debug.Log(switchTurnButton.transform.position.x);
     }
 
     // For debug
@@ -154,6 +163,7 @@ public class GameLoop : MonoBehaviour
             return;
         
         switchTurnButton.gameObject.SetActive(true);
+        YUIMover(switchTurnButton.gameObject, -Screen.height);
 
         if (_prevIndex > _currentPlayer.playerMovement.currentIndex)
         {

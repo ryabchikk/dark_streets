@@ -1,6 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
-
+using static UIAnimations;
 namespace Business
 {
     public class DefenceCard: BusinessCardBase
@@ -13,6 +13,7 @@ namespace Business
         protected override void ActivateBusinessCardImpl()
         {
             UpdateStrings();
+            AnimateDefenceCard();
         }
 
         public void Defend()
@@ -38,6 +39,11 @@ namespace Business
             handgunText.text = _currentBusiness.GetDefendersCount(FighterType.Handgun).ToString();
             machinegunText.text = _currentBusiness.GetDefendersCount(FighterType.Machinegun).ToString();
             defendersCount.text = _currentBusiness.DefendersCount.ToString();
+        }
+
+        private void AnimateDefenceCard()
+        {
+            YUIMover(gameObject,  -Screen.height);
         }
     }
 }

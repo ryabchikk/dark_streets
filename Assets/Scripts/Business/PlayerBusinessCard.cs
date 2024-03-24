@@ -89,6 +89,6 @@ public class PlayerBusinessCard : BusinessCardBase
     
     private void AnimateBusinessCard()
     {
-        YUIMover(gameObject, new Vector2(0, -Screen.height), -Screen.height / 8, 0.5f, LeanTweenType.easeOutExpo);
+        YUIMover(gameObject, -Screen.height);
     }
 }

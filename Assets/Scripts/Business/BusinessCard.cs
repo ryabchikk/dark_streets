@@ -13,7 +13,7 @@ public class BusinessCard : BusinessCardBase
     [SerializeField] private Text priceText;
     [SerializeField] private Text nameText;
     [SerializeField] private Button buyButton;
-    
+
     [Space]
     [Header ("Business Icons")]
     [SerializeField] private Image typeIcon;
@@ -74,6 +74,6 @@ public class BusinessCard : BusinessCardBase
     
     private void AnimateBusinessCard()
     {
-        YUIMover(gameObject, new Vector2(0, -Screen.height), -Screen.height / 8, 0.5f, LeanTweenType.easeOutExpo);
+        YUIMover(gameObject, -Screen.height);
     }
 }

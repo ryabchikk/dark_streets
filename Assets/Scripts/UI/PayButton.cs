@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using static UIAnimations;
 public class PayButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
@@ -15,9 +15,11 @@ public class PayButton : MonoBehaviour
     {
         _currentPlayer = currentPlayer;
         _business = business;
-        text.text = $"ПЛОТИ {business.PriceForCellPass}";
+        text.text = $"{business.PriceForCellPass}";
         OnPayCallback = callback;
-        gameObject.SetActive(true); 
+        gameObject.SetActive(true);
+
+        YUIMover(gameObject, -Screen.height);
     }
 
     public void Click()
@@ -31,4 +33,5 @@ public class PayButton : MonoBehaviour
         OnPayCallback?.Invoke();
         gameObject.SetActive(false);
     }
+
 }

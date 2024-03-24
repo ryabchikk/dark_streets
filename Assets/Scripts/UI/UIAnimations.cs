@@ -1,25 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class UIAnimations
 {
-    public static void YUIMover(GameObject gameObject, Vector2 startPos, float endYPos,float time, LeanTweenType easeType = LeanTweenType.easeOutExpo)
+    public static void YUIMover(GameObject gameObject, float startYPos, float time = 0.5f, LeanTweenType easeType = LeanTweenType.easeOutExpo)
     {
         GameObject go = gameObject;
+        float endYPos = go.transform.localPosition.y;
 
         go.SetActive(true);
-        go.transform.localPosition = startPos;
+        go.transform.localPosition = new Vector2(go.transform.localPosition.x, startYPos);
         
         gameObject.LeanMoveLocalY(endYPos, time).setEase(easeType);
     }
 
-    public static void XUIMover(GameObject gameObject, Vector2 startPos, float endXPos, float time, LeanTweenType easeType = LeanTweenType.easeOutExpo)
+    public static void XUIMover(GameObject gameObject, float startXPos, float time =0.5f, LeanTweenType easeType = LeanTweenType.easeOutExpo)
     {
         GameObject go = gameObject;
-
+        float endXPos = go.transform.localPosition.x;
+        
         go.SetActive(true);
-        go.transform.localPosition = startPos;
+        go.transform.localPosition = new Vector2(startXPos, go.transform.localPosition.y);
         
         gameObject.LeanMoveLocalX(endXPos, time).setEase(easeType);
     }
