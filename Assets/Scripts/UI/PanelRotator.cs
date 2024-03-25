@@ -11,7 +11,7 @@ public class PanelRotator : MonoBehaviour
         _mainCamera = Camera.main;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         var rotation = _mainCamera.transform.rotation;
         transform.LookAt(transform.position + rotation * Vector3.forward);
