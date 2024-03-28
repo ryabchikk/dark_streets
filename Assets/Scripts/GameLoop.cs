@@ -29,21 +29,11 @@ public class GameLoop : MonoBehaviour
     private int _indexPlayer = 0;
     private int _steps = 0;
     private int _prevIndex;
-
-    private void Awake()
-    {
-        foreach (Player player in players)
-        {
-            player.playerClass.Wallet.AddMoney(20000);
-        }
-       
-    }
     private void Start()
     {
         foreach (Player player in players) 
         { 
             player.playerMovement.listNodesTransform = map.GetListNodesTransform();
-            
         }
 
         for (int i = 0; i < map.GetListNodes().Count; i++)
@@ -99,11 +89,15 @@ public class GameLoop : MonoBehaviour
     {
         card.gameObject.SetActive(false);
         switchTurnButton.gameObject.SetActive(false);
+        
         UpdateCurrentPlayer();
+        
         dice.isRolled = true;
         switchTurnButton.enabled = false;
+        
         playerNameText.text = _currentPlayer.Name;
         _prevIndex = _currentPlayer.playerMovement.currentIndex;
+        
         TurnTransfered?.Invoke();
     }
 

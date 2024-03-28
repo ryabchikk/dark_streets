@@ -16,17 +16,19 @@ public enum SizeBusiness
 }
 public class BusinessClass
 {   
+    public PlayerClass Owner { get; private set; }
     public int BuyPrice { get; }
     public int SellPrice => BuyPrice;  // Todo change
     public int UpgradePrice => (BuyPrice / 10) * 2;
     public int PassiveIncome => BuyPrice / 10 * (OwnerSameTypeBusinessesCount - 1) + (Lvl != 0 ? BuyPrice / 10 + 100 * Lvl : 0);
-    public int PriceForCellPass => PassiveIncome / 2 + BuyPrice / 2;
+    public int PriceForCellPass => PassiveIncome / 2 + BuyPrice / 2;    
+    public int DefendersCount => _defenders.Values.Sum();
+    public int Lvl { get; private set; }
+    public string Name { get; private set; }
+    
     public SizeBusiness Size { get; private set; }
     public TypeBusiness Type { get; private set; }
-    public string Name { get; private set; }
-    public int Lvl { get; private set; }
-    public PlayerClass Owner { get; private set; }
-    public int DefendersCount => _defenders.Values.Sum();
+
     public event Action<BusinessClass, PlayerClass> BusinessBought;
     public event Action<BusinessClass, PlayerClass> BusinessSold;
     public event Action LevelChanged;
@@ -127,22 +129,18 @@ public class BusinessClass
 
     public bool TryAddDefenders(FighterType type, int count)
     {
-        if (DefendersCount >= 5)
-        {
+        if (DefendersCount >= 5) {
             return false;
         }
         
-        if (!Owner.TrySetDefenders(type, count))
-        {
+        if (!Owner.TrySetDefenders(type, count)) {
             return false;
         }
         
-        if (_defenders.ContainsKey(type))
-        {
+        if (_defenders.ContainsKey(type)) {
             _defenders[type] += count;
         }
-        else
-        {
+        else {
             _defenders.Add(type, count);
         }
 

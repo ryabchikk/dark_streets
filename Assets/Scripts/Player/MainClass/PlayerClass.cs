@@ -30,6 +30,7 @@ public class PlayerClass
     {
         this.typePlayer = typePlayer;
         Wallet = wallet;
+        Wallet.AddMoney(money);
 
         countBusiness = 0;
         _fighters = new Dictionary<FighterType, int>();
