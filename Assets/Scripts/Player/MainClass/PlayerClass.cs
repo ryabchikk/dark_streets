@@ -67,6 +67,16 @@ public class PlayerClass
         FightersChanged?.Invoke();
     }
 
+    public void RemoveFighters(FighterType type, int count)
+    {
+        if (_fighters.ContainsKey(type))
+        {
+            _fighters[type] -= Math.Min(count, _fighters[type]);
+        }
+        
+        FightersChanged?.Invoke();
+    }
+
     public bool TrySetDefenders(FighterType type, int count)
     {
         if (GetFighterCount(type) < count)

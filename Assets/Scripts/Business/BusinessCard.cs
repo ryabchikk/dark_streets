@@ -19,19 +19,11 @@ public class BusinessCard : BusinessCardBase
     [SerializeField] private Image typeIcon;
     [SerializeField] private Image sizeIcon;
     
-    [Space]
-    [Header ("Icons Sprites")]
-    [SerializeField] private Sprite[] typeSprites;
-    [SerializeField] private Sprite[] sizeSprites;
-
     public void ActivateBusinessCard(BusinessClass business, UnityAction buyCallback)
     {
+        buyButton.onClick.RemoveAllListeners();
         ActivateBusinessCard(business);
         buyButton.onClick.AddListener(buyCallback);
-        buyButton.onClick.AddListener(() =>
-        {
-            buyButton.onClick.RemoveAllListeners();
-        });
     }
 
     protected override void ActivateBusinessCardImpl()
@@ -60,8 +52,8 @@ public class BusinessCard : BusinessCardBase
 
     private void UpdateIcons(BusinessClass business)
     {
-        typeIcon.sprite = typeSprites[(int)business.Type];
-        sizeIcon.sprite = sizeSprites[(int)business.Size];
+        typeIcon.sprite = ResourcesHelper.GetTypeSprite(business.Type);
+        sizeIcon.sprite = ResourcesHelper.GetSizeSprite(business.Size);
     }
 
     private void UpdateStrings(BusinessClass business)

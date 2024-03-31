@@ -20,8 +20,22 @@ public class BusinessClass
     public int BuyPrice { get; }
     public int SellPrice => BuyPrice;  // Todo change
     public int UpgradePrice => (BuyPrice / 10) * 2;
-    public int PassiveIncome => BuyPrice / 10 * (OwnerSameTypeBusinessesCount - 1) + (Lvl != 0 ? BuyPrice / 10 + 100 * Lvl : 0);
-    public int PriceForCellPass => PassiveIncome / 2 + BuyPrice / 2;    
+    public int PassiveIncome {
+        get
+        {
+            if (Owner is null)
+            {
+                return 0;
+            }
+
+            var sameTypeMultiplier = OwnerSameTypeBusinessesCount > 0 ? OwnerSameTypeBusinessesCount - 1 : 0;
+            var nonModified = BuyPrice / 10 * sameTypeMultiplier + (Lvl != 0 ? BuyPrice / 10 + 100 * Lvl : 0);
+            
+            return (int)(nonModified * EventController.GetPassiveEffectFor(Type, Owner));
+        }
+    }
+
+    public int PriceForCellPass => (int)((PassiveIncome / 2 + BuyPrice / 2) * EventController.GetActiveEffectFor(Type, Owner));
     public int DefendersCount => _defenders.Values.Sum();
     public int Lvl { get; private set; }
     public string Name { get; private set; }

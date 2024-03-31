@@ -17,11 +17,6 @@ public class BusinessMiniCard : MonoBehaviour
     [SerializeField] private Image typeIcon;
     [SerializeField] private Image sizeIcon;
 
-    [Space]
-    [Header("Icons Sprites")]
-    [SerializeField] private Sprite[] typeSprites;
-    [SerializeField] private Sprite[] sizeSprites;
-
     private BusinessClass _currentBusiness;
     private PlayerBusinessCard _playerBusinessCard;
     private GameObject _defenceCard;
@@ -74,8 +69,8 @@ public class BusinessMiniCard : MonoBehaviour
 
     private void UpdateIcons(BusinessClass business)
     {
-        typeIcon.sprite = typeSprites[(int)business.Type];
-        sizeIcon.sprite = sizeSprites[(int)business.Size];
+        typeIcon.sprite = ResourcesHelper.GetTypeSprite(business.Type);
+        sizeIcon.sprite = ResourcesHelper.GetSizeSprite(business.Size);
     }
 
     private void UpdateStrings()
