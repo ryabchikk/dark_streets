@@ -1234,7 +1234,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 102401435969929182}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2278736308206985246}
+        m_TargetAssemblyTypeName: BusinessMiniCanvas, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6163244735786298684
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,6 +1259,7 @@ GameObject:
   - component: {fileID: 1745730787818632592}
   - component: {fileID: 2944990241794828034}
   - component: {fileID: 5042218922307988159}
+  - component: {fileID: 2278736308206985246}
   m_Layer: 5
   m_Name: BusinessMiniCanvas
   m_TagString: Untagged
@@ -1337,6 +1350,26 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2278736308206985246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6163244735786298684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3ec26462c257f4eb5f8f0c0f6894e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  business: {fileID: 0}
+  levelText: {fileID: 5566627955246407890}
+  passiveIncomeText: {fileID: 4942571393122444880}
+  priceForPassText: {fileID: 6828190348597271287}
+  gameLoop: {fileID: 0}
+  businessCard: {fileID: 0}
+  typeIcon: {fileID: 6456670422007716720}
+  sizeIcon: {fileID: 7376258780608794262}
 --- !u!1 &9079907679192579177
 GameObject:
   m_ObjectHideFlags: 0

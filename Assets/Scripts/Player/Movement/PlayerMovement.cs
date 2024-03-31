@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField, Min(1)] private int speed;
-    [SerializeField] private Dice dice;
+    [SerializeField] public Dice dice;
     
     [HideInInspector]
     public bool isMoving = false;

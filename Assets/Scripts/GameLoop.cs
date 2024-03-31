@@ -7,9 +7,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UIAnimations;
+using Random = UnityEngine.Random;
+
 public class GameLoop : MonoBehaviour
 {
-    [SerializeField] private Player[] players;
+    [SerializeField] private List<Player> players;
+    [SerializeField] private GameObject[] playerPrefabs;
     [SerializeField] private Map map;
     [SerializeField] private Dice dice;
     [SerializeField] private BusinessCard card;
@@ -17,6 +20,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private Button switchTurnButton;
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private PayButton payButton;
+    [SerializeField] private EventCard eventCard;
 
     public event Action RoundComplete;
     public event Action TurnTransfered;
@@ -31,9 +35,14 @@ public class GameLoop : MonoBehaviour
     private int _prevIndex;
     private void Start()
     {
-        foreach (Player player in players) 
-        { 
-            player.playerMovement.listNodesTransform = map.GetListNodesTransform();
+        for (int i = 0; i < GameCreation.PlayersCount; ++i)
+        {
+            var player = playerPrefabs[i];
+            var go = Instantiate(player, new Vector3(1.63f, 0, -72.44f), Quaternion.identity);
+            var playerController = go.GetComponent<Player>();
+            players.Add(playerController);
+            playerController.playerMovement.listNodesTransform = map.GetListNodesTransform();
+            playerController.playerMovement.dice = dice;
         }
 
         for (int i = 0; i < map.GetListNodes().Count; i++)
@@ -54,6 +63,8 @@ public class GameLoop : MonoBehaviour
         walletView.SetCurrentWallet(_currentPlayer.playerClass.Wallet);
         playerNameText.text = _currentPlayer.Name;
         Debug.Log(switchTurnButton.transform.position.x);
+        TurnTransfered += RollEvents;
+        RoundComplete += EventController.NotifyAllTurnsPassed;
     }
 
     // For debug
@@ -89,6 +100,7 @@ public class GameLoop : MonoBehaviour
     {
         card.gameObject.SetActive(false);
         switchTurnButton.gameObject.SetActive(false);
+        EventController.NotifyTurnPassed(_currentPlayer.playerClass);
         
         UpdateCurrentPlayer();
         
@@ -139,7 +151,7 @@ public class GameLoop : MonoBehaviour
 
     private void UpdateCurrentPlayer()
     {
-        if(_indexPlayer<players.Length - 1) {
+        if(_indexPlayer<players.Count - 1) {
             _indexPlayer++; 
         }
         else {
@@ -209,5 +221,66 @@ public class GameLoop : MonoBehaviour
     private void OnBusinessSold(BusinessClass business, PlayerClass _)
     {
         business.SetOwnerSameTypeBusinessesCountCallback(null);
+    }
+
+    private void RollEvents()
+    {
+        var globalEvent = EventController.RollGlobalEvent();
+        if (globalEvent is not null)
+        {
+            eventCard.Enqueue(globalEvent);
+        }
+
+        var localEvent = EventController.RollLocalEvent(_currentPlayer.playerClass);
+        if (localEvent is null) 
+            return;
+        
+        eventCard.Enqueue(localEvent);
+        if (localEvent.Duration != 0) 
+            return;
+        
+        ApplyLocalOneshotEvent(localEvent);
+    }
+
+    private void ApplyLocalOneshotEvent(Event localEvent)
+    {
+        var change = localEvent.GetDiceEffect();
+        switch (localEvent.AffectedPlayerStat)
+        {
+            case AffectedPlayerStat.Fighters:
+                if(change > 0)
+                {
+                    var fighterType = (FighterType)Random.Range(0, 3);
+                    _currentPlayer.playerClass.AddFighters(fighterType, change);
+                }
+                else
+                {
+                    change = -change;
+                    while (change > 0)
+                    {
+                        if (_currentPlayer.playerClass.CountFighter == 0)
+                        {
+                            break;
+                        }
+                        
+                        var fighterType = (FighterType)Random.Range(0, 3);
+                        var amountToRemove = _currentPlayer.playerClass.GetFighterCount(fighterType);
+                        amountToRemove = Math.Min(amountToRemove, change);
+                        _currentPlayer.playerClass.RemoveFighters(fighterType, amountToRemove);
+                    } 
+                }
+                break;
+            case AffectedPlayerStat.Money:
+                var wallet = _currentPlayer.playerClass.Wallet;
+                if (change > 0)
+                {
+                    wallet.AddMoney(change);
+                }
+                else
+                {
+                    wallet.TrySpendMoney(Math.Min(change, wallet.money));
+                }
+                break;
+        }
     }
 }

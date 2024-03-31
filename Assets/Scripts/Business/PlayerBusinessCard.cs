@@ -25,11 +25,6 @@ public class PlayerBusinessCard : BusinessCardBase
     [Space] 
     [Header("Objects")] 
     [SerializeField] private GameObject defenceCard;
-    
-    [Space]
-    [Header ("Icons Sprites")]
-    [SerializeField] private Sprite[] typeSprites;
-    [SerializeField] private Sprite[] sizeSprites;
 
     protected override void ActivateBusinessCardImpl()
     {
@@ -74,8 +69,8 @@ public class PlayerBusinessCard : BusinessCardBase
 
     private void UpdateIcons(BusinessClass business)
     {
-        typeIcon.sprite = typeSprites[(int)business.Type];
-        sizeIcon.sprite = sizeSprites[(int)business.Size];
+        typeIcon.sprite = ResourcesHelper.GetTypeSprite(business.Type);
+        sizeIcon.sprite = ResourcesHelper.GetSizeSprite(business.Size);
     }
 
     private void UpdateStrings(BusinessClass business)
