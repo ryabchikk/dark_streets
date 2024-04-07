@@ -169,7 +169,7 @@ public class GameLoop : MonoBehaviour
             return;
         
         switchTurnButton.gameObject.SetActive(true);
-        YUIMover(switchTurnButton.gameObject, -Screen.height);
+        DOYUIMover(switchTurnButton.gameObject, -Screen.height);
 
         if (_prevIndex > _currentPlayer.playerMovement.currentIndex)
         {

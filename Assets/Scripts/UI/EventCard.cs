@@ -1,8 +1,9 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using static UIAnimations;
 public class EventCard : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText;
@@ -26,7 +27,7 @@ public class EventCard : MonoBehaviour
         nameText.text = ev.Name;
         descriptionText.text = ev.Description;
         effectText.text = ev.EffectDescription;
-        
+        DOYUIMover(gameObject, -Screen.height,0.5f,Ease.OutBack);
         gameObject.SetActive(true);
     }
 

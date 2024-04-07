@@ -29,6 +29,9 @@ public class BusinessCard : BusinessCardBase
     protected override void ActivateBusinessCardImpl()
     {
         UpdateBusinessCard(_currentBusiness);
+
+        //gameObject.SetActive(true);
+        
         AnimateBusinessCard();
     }
 
@@ -66,6 +69,6 @@ public class BusinessCard : BusinessCardBase
     
     private void AnimateBusinessCard()
     {
-        YUIMover(gameObject, -Screen.height);
+        DOYUIMover(gameObject, -Screen.height);
     }
 }

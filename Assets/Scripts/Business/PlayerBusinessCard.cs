@@ -84,6 +84,6 @@ public class PlayerBusinessCard : BusinessCardBase
     
     private void AnimateBusinessCard()
     {
-        YUIMover(gameObject, -Screen.height);
+        DOYUIMover(gameObject, -Screen.height);
     }
 }

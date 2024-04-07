@@ -25,6 +25,7 @@ public class DummySoundButton : MonoBehaviour
     public void OnClick()
     {
         audioSource.Play();
+        Debug.Log("Click");
         if (_parentButton.enabled)
         {
             _parentButton.onClick?.Invoke();

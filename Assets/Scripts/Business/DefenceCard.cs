@@ -43,7 +43,7 @@ namespace Business
 
         private void AnimateDefenceCard()
         {
-            YUIMover(gameObject,  -Screen.height);
+            DOYUIMover(gameObject,  -Screen.height);
         }
     }
 }

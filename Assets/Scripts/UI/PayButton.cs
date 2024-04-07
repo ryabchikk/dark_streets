@@ -19,7 +19,7 @@ public class PayButton : MonoBehaviour
         OnPayCallback = callback;
         gameObject.SetActive(true);
 
-        YUIMover(gameObject, -Screen.height);
+        DOYUIMover(gameObject, -Screen.height);
     }
 
     public void Click()

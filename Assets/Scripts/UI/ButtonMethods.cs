@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,12 +18,12 @@ public class ButtonMethods : MonoBehaviour
     public void OpenLeftAnimatePanel(GameObject panel)
     {
         panel.SetActive(true);
-        XUIMover(panel,-Screen.width);
+        DOXUIMover(panel,-Screen.width);
     }
     public void OpenFighterMarketAnimatePanel(GameObject panel)
     {
         panel.SetActive(true);
-        YUIMover(panel, -Screen.height, 0.5f, LeanTweenType.easeOutBack);
+        DOYUIMover(panel, -Screen.height, 0.5f, Ease.OutBack);
     }
 
     public void ClosePanel(GameObject panel)
