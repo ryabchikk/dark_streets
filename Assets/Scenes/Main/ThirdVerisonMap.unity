@@ -9448,6 +9448,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 34
       objectReference: {fileID: 0}
+    - target: {fileID: 3876998912571917681, guid: 785df0117bd8bfb4e863a2e4011e34be, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7721360425287910019, guid: 785df0117bd8bfb4e863a2e4011e34be, type: 3}
       propertyPath: nameText
       value: 
@@ -15240,7 +15244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921698956}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.45377764, y: -1.7596457e-15, z: 2.040379e-16, w: 0.89111495}
+  m_LocalRotation: {x: 0.4537776, y: 0.000000026557297, z: -0.0000000135236276, w: 0.89111495}
   m_LocalPosition: {x: 2.4, y: 44, z: -105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23393,15 +23397,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.45377764
+      value: 0.4537776
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1.7596457e-15
+      value: 0.000000026557297
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 2.040379e-16
+      value: -0.0000000135236276
       objectReference: {fileID: 0}
     - target: {fileID: 5272577480730955778, guid: 7d9b0e86f8d4d1b41b1f2636c228c70f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -31921,7 +31925,7 @@ AudioSource:
   m_GameObject: {fileID: 2083792748}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2108445562574139564, guid: b2ea17e8a1cb6f2498fd5e4f97594cc6, type: 2}
   m_audioClip: {fileID: 8300000, guid: 229383fa368c34047a0de4f51c366d12, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
