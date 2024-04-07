@@ -46,6 +46,7 @@ public class BusinessClass
     public event Action<BusinessClass, PlayerClass> BusinessBought;
     public event Action<BusinessClass, PlayerClass> BusinessSold;
     public event Action LevelChanged;
+    public event Action Updated; 
 
     private int OwnerSameTypeBusinessesCount => _getOwnerBusinessCount?.Invoke() ?? 0;
 
@@ -66,6 +67,7 @@ public class BusinessClass
         if (player is not null && Owner is null)
         {
             Owner = player;
+            Updated?.Invoke();
             return true;
         }
 
@@ -86,6 +88,7 @@ public class BusinessClass
         
         SetOwner(player);
         BusinessBought?.Invoke(this, player);
+        Updated?.Invoke();
         return true;
     }
 
@@ -104,6 +107,7 @@ public class BusinessClass
         Owner = null;
         Lvl = 0;
         BusinessSold?.Invoke(this, oldOwner);
+        Updated?.Invoke();
     }
 
     public void SetOwnerSameTypeBusinessesCountCallback(Func<int> callback)
@@ -120,6 +124,7 @@ public class BusinessClass
 
         ++Lvl;
         LevelChanged?.Invoke();
+        Updated?.Invoke();
         return true;
     }
 
@@ -131,6 +136,7 @@ public class BusinessClass
         Owner.Wallet.AddMoney(UpgradePrice);
         --Lvl;
         LevelChanged?.Invoke();
+        Updated?.Invoke();
         return true;
     }
     
@@ -158,6 +164,7 @@ public class BusinessClass
             _defenders.Add(type, count);
         }
 
+        Updated?.Invoke();
         return true;
     }
 
@@ -171,6 +178,7 @@ public class BusinessClass
         _defenders[type] -= count;
         
         Owner.AddFighters(type, count);
+        Updated?.Invoke();
         return true;
     }
 
