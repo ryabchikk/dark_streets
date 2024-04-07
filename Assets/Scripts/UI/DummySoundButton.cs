@@ -6,29 +6,18 @@ using UnityEngine.UI;
 
 public class DummySoundButton : MonoBehaviour
 {
-    [SerializeField] private RectTransform rectTransform;
     [SerializeField] private AudioSource audioSource;
-    private RectTransform _parentRectTransform;
-    private Button _parentButton;
     
-    private void Start()
+    public void Init(AudioSource source)
     {
-        _parentRectTransform = transform.parent.gameObject.GetComponent<RectTransform>();
-        _parentButton = transform.parent.gameObject.GetComponent<Button>();
-
-        rectTransform.anchoredPosition = new Vector2(0, 0);
-        var sizeDelta = _parentRectTransform.sizeDelta;
-        Debug.Log(sizeDelta);
-        rectTransform.sizeDelta = new Vector2(sizeDelta.x, sizeDelta.y);
+        audioSource.clip = source.clip;
+        audioSource.Play();
+        StartCoroutine(DestroyOnAudioEnd());
     }
 
-    public void OnClick()
+    private IEnumerator DestroyOnAudioEnd()
     {
-        audioSource.Play();
-        Debug.Log("Click");
-        if (_parentButton.enabled)
-        {
-            _parentButton.onClick?.Invoke();
-        }
+        yield return new WaitForSeconds(audioSource.clip.length);
+        Destroy(gameObject);
     }
 }

@@ -19,22 +19,17 @@ public class BusinessMiniCanvas : MonoBehaviour
 
     private void Start()
     {
-        /*business.businessClass.LevelChanged += UpdateUI;
+        business.businessClass.Updated += UpdateUI;
         gameLoop.AnyBusinessBought += UpdateUI;
         gameLoop.AnyBusinessSold += UpdateUI;
-        UpdateUI();*/
+        UpdateUI();
     }
 
     private void OnDestroy()
     {
-        /*business.businessClass.LevelChanged -= UpdateUI;
+        business.businessClass.Updated -= UpdateUI;
         gameLoop.AnyBusinessBought -= UpdateUI;
-        gameLoop.AnyBusinessSold -= UpdateUI;*/
-    }
-
-    private void Update()
-    {
-        UpdateUI();
+        gameLoop.AnyBusinessSold -= UpdateUI;
     }
 
     public void OnClick()

@@ -195,11 +195,13 @@ public class GameLoop : MonoBehaviour
                 {
                     businessController.ChangeBusinessColors(_currentPlayer.playerLightMaterial, _currentPlayer.playerNeutralMaterial);
                     card.OnSuccessfulBuy();
+
+                    var currentPlayer = _currentPlayer.playerClass;
                     
                     businessController
                         .businessClass
                         .SetOwnerSameTypeBusinessesCountCallback(
-                            () => GetBusinessesFor(_currentPlayer.playerClass).Count(business => business.Type == businessController.businessClass.Type)
+                            () => GetBusinessesFor(currentPlayer).Count(business => business.Type == businessController.businessClass.Type)
                             );
 
                     businessController.businessClass.BusinessSold += OnBusinessSold;
