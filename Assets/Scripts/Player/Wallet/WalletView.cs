@@ -10,6 +10,8 @@ public class WalletView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI amountView;
     [SerializeField] private RectTransform startRect;
+    [SerializeField] private RectTransform endRect;
+    
     private Wallet wallet;
 
     public void SetCurrentWallet(Wallet newWallet)
@@ -28,6 +30,7 @@ public class WalletView : MonoBehaviour
     {
         int amount = wallet.money;
         amountView.text = amount.ToString();
-        DOYUIMover(amountView.gameObject, startRect.anchoredPosition.y, 0.2f);
+        //DOYUIMover(amountView.gameObject, startRect.anchoredPosition.y, 0.2f);
+        DOYUIMover(amountView.gameObject, startRect, endRect, 0.2f);
     }
 }

@@ -1202,6 +1202,7 @@ GameObject:
   - component: {fileID: 6219620320340735733}
   - component: {fileID: 2387267205892796049}
   - component: {fileID: 8730116575921425699}
+  - component: {fileID: 8925862484055539602}
   m_Layer: 0
   m_Name: PayButton
   m_TagString: Untagged
@@ -1323,9 +1324,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8730116575921425699}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 8925862484055539602}
+        m_TargetAssemblyTypeName: PlaySoundOnClick, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1344,7 +1345,7 @@ AudioSource:
   m_GameObject: {fileID: 7834040014813931102}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2108445562574139564, guid: b2ea17e8a1cb6f2498fd5e4f97594cc6, type: 2}
   m_audioClip: {fileID: 8300000, guid: 5f1e88e111490f24c91047b836cf3108, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1431,6 +1432,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8925862484055539602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834040014813931102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2cb03673d6b84488bcfe80329c2d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 8730116575921425699}
+  dummy: {fileID: 9023288100171950683, guid: f19a894e00a070d4b94eea3cf4fe77ca, type: 3}
 --- !u!1 &9219866151892972210
 GameObject:
   m_ObjectHideFlags: 0

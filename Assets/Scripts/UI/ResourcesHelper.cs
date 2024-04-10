@@ -7,6 +7,7 @@ public class ResourcesHelper : MonoBehaviour
 {
     [SerializeField] private Sprite[] sizeSprites;
     [SerializeField] private Sprite[] typeSprites;
+    [SerializeField] private AudioClip[] audioClips;
     private static ResourcesHelper _instance;
     
     private void Awake()
@@ -22,5 +23,10 @@ public class ResourcesHelper : MonoBehaviour
     public static Sprite GetSizeSprite(SizeBusiness size)
     {
         return _instance.sizeSprites[(int)size];
+    }
+
+    public static AudioClip GetTypeSound(TypeBusiness type)
+    {
+        return _instance.audioClips[(int)type];
     }
 }

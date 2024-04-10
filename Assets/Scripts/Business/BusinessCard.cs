@@ -18,7 +18,11 @@ public class BusinessCard : BusinessCardBase
     [Header ("Business Icons")]
     [SerializeField] private Image typeIcon;
     [SerializeField] private Image sizeIcon;
-    
+
+    [Space]
+    [Header("Business AudioSource")]
+    [SerializeField] private AudioSource audioSource;
+
     public void ActivateBusinessCard(BusinessClass business, UnityAction buyCallback)
     {
         buyButton.onClick.RemoveAllListeners();
@@ -29,10 +33,11 @@ public class BusinessCard : BusinessCardBase
     protected override void ActivateBusinessCardImpl()
     {
         UpdateBusinessCard(_currentBusiness);
-
-        //gameObject.SetActive(true);
         
+        //gameObject.SetActive(true);
+
         AnimateBusinessCard();
+        UpdateSound(_currentBusiness);
     }
 
     public void OnSuccessfulBuy()
@@ -67,6 +72,12 @@ public class BusinessCard : BusinessCardBase
         nameText.text = business.Name.ToString();
     }
     
+    private void UpdateSound(BusinessClass business)
+    {
+        audioSource.clip = ResourcesHelper.GetTypeSound(business.Type);
+        audioSource.Play();
+    }
+
     private void AnimateBusinessCard()
     {
         DOYUIMover(gameObject, -Screen.height);

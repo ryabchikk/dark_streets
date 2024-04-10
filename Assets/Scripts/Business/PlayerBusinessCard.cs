@@ -22,6 +22,10 @@ public class PlayerBusinessCard : BusinessCardBase
     [SerializeField] private Image typeIcon;
     [SerializeField] private Image sizeIcon;
     
+    [Space]
+    [Header("Business AudioSource")]
+    [SerializeField] private AudioSource audioSource;
+    
     [Space] 
     [Header("Objects")] 
     [SerializeField] private GameObject defenceCard;
@@ -30,6 +34,8 @@ public class PlayerBusinessCard : BusinessCardBase
     {
         UpdateBusinessCard();
         AnimateBusinessCard();
+        UpdateSound(_currentBusiness);
+
         _currentBusiness.LevelChanged += UpdateBusinessCard;
     }
 
@@ -73,6 +79,12 @@ public class PlayerBusinessCard : BusinessCardBase
         sizeIcon.sprite = ResourcesHelper.GetSizeSprite(business.Size);
     }
 
+    private void UpdateSound(BusinessClass business)
+    {
+        audioSource.clip = ResourcesHelper.GetTypeSound(business.Type);
+        audioSource.Play();
+    }
+    
     private void UpdateStrings(BusinessClass business)
     {
         sizeText.text = business.Size.ToString();
