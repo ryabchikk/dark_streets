@@ -177,16 +177,6 @@ MonoBehaviour:
   levelText: {fileID: 4639427572060063653}
   typeIcon: {fileID: 5682431462555932331}
   sizeIcon: {fileID: 8904012972020732278}
-  typeSprites:
-  - {fileID: 21300000, guid: 2eee56847437d0d4b97b318a3fa02941, type: 3}
-  - {fileID: 21300000, guid: 7f24f297a47547a41b595881f976a085, type: 3}
-  - {fileID: 21300000, guid: 0b618b7b504050548bd36c081cca5050, type: 3}
-  - {fileID: 21300000, guid: f6d17cf8a0a33574caa277c8fd61c202, type: 3}
-  - {fileID: 21300000, guid: f540701f9defa964abc9730d1d7ab700, type: 3}
-  sizeSprites:
-  - {fileID: 21300000, guid: fb7517684a9ce0447b563d7f54c3b912, type: 3}
-  - {fileID: 21300000, guid: fce29d8c0cd24b546ad823d5807d9452, type: 3}
-  - {fileID: 21300000, guid: 4cb1b8c155b132841b5917504df4a5c7, type: 3}
 --- !u!1 &2185707531128425651
 GameObject:
   m_ObjectHideFlags: 0
