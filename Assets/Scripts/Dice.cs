@@ -30,10 +30,10 @@ public class Dice : MonoBehaviour
     
     private void RollTheDice()
     {   
-            finalSide = ChooseSideDice();
-            rend.sprite = diceSides[finalSide-1];
-            DiceRolled?.Invoke();
-            Debug.Log("Final side: " + finalSide);
+        finalSide = ChooseSideDice();
+        rend.sprite = diceSides[finalSide-1];
+        DiceRolled?.Invoke();
+        Debug.Log("Final side: " + finalSide);
     }    
     
     private int ChooseSideDice()

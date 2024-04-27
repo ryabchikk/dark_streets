@@ -15,6 +15,11 @@ public class Map : MonoBehaviour
         }
     }
 
+    public BusinessController GetBusinessAt(int index)
+    {
+        return listNodes[index].GetComponent<BusinessController>();
+    }
+
     public List<Transform> GetListNodesTransform() { return listNodesTransform; }
     public List<GameObject> GetListNodes() { return listNodes; }
 }

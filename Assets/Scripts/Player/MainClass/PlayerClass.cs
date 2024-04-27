@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
 
 public enum TypePlayer
 {
@@ -13,57 +17,76 @@ public enum TypePlayer
 
 public class PlayerClass
 {
-    public int money { get; private set; }
-    public int countFighter { get; private set; }
+    public int money => Wallet.money;
+    public int CountFighter => _fighters.Values.Sum();
     public int countBusiness { get; private set; }
     public TypePlayer typePlayer { get; private set; }
-    public List<int> businessIndex { get; private set; }
+    public Wallet Wallet { get; }
+    public event Action FightersChanged; 
 
-    public PlayerClass()
-    {
-        money = 10000;
-        countFighter = 0;
-        countBusiness = 0;
-        typePlayer = TypePlayer.classic;
-    }
+    private Dictionary<FighterType, int> _fighters;
 
-    public PlayerClass(int money, TypePlayer typePlayer)
+    public PlayerClass(int money, TypePlayer typePlayer, Wallet wallet)
     {
-        this.money = money;
         this.typePlayer = typePlayer;
+        Wallet = wallet;
+        Wallet.AddMoney(money);
 
-        businessIndex = new List<int>();
-        this.countBusiness = 0;
-        this.countFighter = 0;
+        countBusiness = 0;
+        _fighters = new Dictionary<FighterType, int>();
     }
 
-    public void SetMoney(int money)
+    public int GetFighterCount(FighterType type)
     {
-        if (money >= 0)
+        return _fighters.TryGetValue(type, out var count) ? count : 0;
+    }
+
+    public bool TryBuy(FighterMarket market, FighterType type, int amount)
+    {
+        var price = Fighter.OfType(type).Price;
+        if (Wallet.money < price * amount || market.GetFightersRemaining(type) < amount)
+            return false;
+        
+        Wallet.TrySpendMoney(price * amount);
+        AddFighters(type, amount);
+        market.TryBuy(type, amount);
+        
+        return true;
+    }
+
+    public void AddFighters(FighterType type, int count)
+    {
+        if (_fighters.ContainsKey(type))
         {
-            this.money = money;
+            _fighters[type] += count;
         }
-    }
-
-    public void SetCountFighter(int countFighter)
-    {
-        if (countFighter >= 0)
+        else
         {
-            this.countFighter = countFighter;
+            _fighters.Add(type, count);
         }
+        FightersChanged?.Invoke();
     }
 
-    public void SetCountBusiness(int countBusiness)
+    public void RemoveFighters(FighterType type, int count)
     {
-        if (countBusiness >= 0)
+        if (_fighters.ContainsKey(type))
         {
-            this.countBusiness = countBusiness;
+            _fighters[type] -= Math.Min(count, _fighters[type]);
         }
+        
+        FightersChanged?.Invoke();
     }
 
-    public void AddNewBusinessIndex(int index)
+    public bool TrySetDefenders(FighterType type, int count)
     {
-        businessIndex.Add(index);
+        if (GetFighterCount(type) < count)
+        {
+            return false;
+        }
+
+        _fighters[type] -= count;
+        FightersChanged?.Invoke();
+        return true;
     }
 }
 

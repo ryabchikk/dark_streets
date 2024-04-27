@@ -15,6 +15,7 @@ public class Wallet : MonoBehaviour
         money += amount;
 
         AmountChanged?.Invoke();
+        Debug.Log($"Add Money {amount} total {money}");
     }
 
     public bool TrySpendMoney(int amount)
