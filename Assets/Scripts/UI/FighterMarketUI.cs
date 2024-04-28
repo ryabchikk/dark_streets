@@ -21,12 +21,12 @@ public class FighterMarketUI : MonoBehaviour
         buyKnucklesButton.onClick.AddListener(() => gameLoop.BuyFighter((int)FighterType.Knuckles));
         buyHandgunButton.onClick.AddListener(() => gameLoop.BuyFighter((int)FighterType.Handgun));
         buyMachinegunButton.onClick.AddListener(() => gameLoop.BuyFighter((int)FighterType.Machinegun));
-        gameLoop.FighterMarket.AnyFighterBought += RefreshFighterCount;
+        gameLoop.FighterMarket.Updated += RefreshFighterCount;
     }
 
     private void OnDestroy()
     {
-        gameLoop.FighterMarket.AnyFighterBought -= RefreshFighterCount;
+        gameLoop.FighterMarket.Updated -= RefreshFighterCount;
     }
 
     private void OnEnable()

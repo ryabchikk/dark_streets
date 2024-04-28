@@ -92,6 +92,14 @@ public class BusinessClass
         return true;
     }
 
+    public void NotifyNewEvent(Event e)
+    {
+        if (e.Type == EventType.Global && e.AffectedBusinessType == Type)
+        {
+            Updated?.Invoke();
+        }
+    }
+
     public void Sell()
     {
         Owner.Wallet.AddMoney(BuyPrice);

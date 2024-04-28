@@ -17027,7 +17027,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1000407808}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1831699332}
+        m_TargetAssemblyTypeName: GameLoop, Assembly-CSharp
+        m_MethodName: Surrender
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1000407808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29133,6 +29145,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 114332473094155614, guid: e440ff0033af9ad4c977072b16d0594a, type: 3}
   m_PrefabInstance: {fileID: 1820783755}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1821254729 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7191407435532380297, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+  m_PrefabInstance: {fileID: 4610695757586802682}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1831699331
 GameObject:
   m_ObjectHideFlags: 0
@@ -29175,6 +29192,7 @@ MonoBehaviour:
   playerNameText: {fileID: 1075667272}
   payButton: {fileID: 1632031549}
   eventCard: {fileID: 2097422669}
+  winPanel: {fileID: 1821254729}
 --- !u!4 &1831699333
 Transform:
   m_ObjectHideFlags: 0
@@ -32995,6 +33013,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2067070619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2618687067157660449, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+  m_PrefabInstance: {fileID: 292826463884889225}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2074000860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33645,17 +33668,17 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2084962703}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2041233099}
         m_TargetAssemblyTypeName: ButtonMethods, Assembly-CSharp
-        m_MethodName: OpenLeftAnimatePanel
+        m_MethodName: OpenPanel
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 911482373}
+          m_ObjectArgument: {fileID: 2067070619}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -34917,6 +34940,46 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3381765296368398768, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: eventCard
+      value: 
+      objectReference: {fileID: 2097422669}
+    - target: {fileID: 3381765296368398768, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 894023747}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2041233099}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClosePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonMethods, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2067070619}
+    - target: {fileID: 5298847912835692200, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6476629680696743632, guid: 43deac0dd7399194fa7d6767f4ef9c8f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -35138,6 +35201,10 @@ PrefabInstance:
       propertyPath: defenceCard
       value: 
       objectReference: {fileID: 924084438}
+    - target: {fileID: 4856077918710681378, guid: 06b4e16bb1d72ac46831a1c1fb140b2f, type: 3}
+      propertyPath: surrenderButton
+      value: 
+      objectReference: {fileID: 1000407804}
     - target: {fileID: 5801429107852934023, guid: 06b4e16bb1d72ac46831a1c1fb140b2f, type: 3}
       propertyPath: sizeText
       value: 
@@ -35428,6 +35495,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2041233095}
     m_Modifications:
+    - target: {fileID: 2588739129865447792, guid: 96096d14e9413f648a2ac7246e3ce326, type: 3}
+      propertyPath: surrenderButton
+      value: 
+      objectReference: {fileID: 1000407804}
     - target: {fileID: 6262330656418925344, guid: 96096d14e9413f648a2ac7246e3ce326, type: 3}
       propertyPath: m_Name
       value: PayPanel
@@ -35632,6 +35703,34 @@ PrefabInstance:
     - target: {fileID: 3159539659268406322, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
       propertyPath: machinegunCountText
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521374754036723492, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521374754036723492, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521374754036723492, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2041233099}
+    - target: {fileID: 5521374754036723492, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521374754036723492, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521374754036723492, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonMethods, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521374754036723492, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7191407435532380297, guid: 72f75169050d2f44f96f3e1e8e72bf8a, type: 3}
       propertyPath: m_Name

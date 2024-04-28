@@ -21,6 +21,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private PayButton payButton;
     [SerializeField] private EventCard eventCard;
+    [SerializeField] private GameObject winPanel;
 
     public event Action RoundComplete;
     public event Action TurnTransfered;
@@ -33,8 +34,12 @@ public class GameLoop : MonoBehaviour
     private int _indexPlayer = 0;
     private int _steps = 0;
     private int _prevIndex;
+    private List<BusinessClass> _businesses;
+    
     private void Start()
     {
+        _businesses = new List<BusinessClass>();
+        
         for (int i = 0; i < GameCreation.PlayersCount; ++i)
         {
             var player = playerPrefabs[i];
@@ -50,6 +55,7 @@ public class GameLoop : MonoBehaviour
             var business = map.GetBusinessAt(i);
             if (business is not null)
             {
+                _businesses.Add(business.businessClass);
                 business.businessClass.BusinessSold += (_, _) =>
                 {
                     business.ChangeBusinessColors(business.DefaultLightMaterial, business.DefaultNeutralMaterial);
@@ -130,6 +136,38 @@ public class GameLoop : MonoBehaviour
     public IEnumerable<BusinessClass> GetBusinessesForCurrentPlayer()
     {
         return GetBusinessesFor(_currentPlayer.playerClass);
+    }
+
+    public void Surrender()
+    {
+        foreach (var business in GetBusinessesForCurrentPlayer())
+        {
+            business.Sell();
+        }
+
+        ReturnFighters(FighterType.Knuckles);
+        ReturnFighters(FighterType.Handgun);
+        ReturnFighters(FighterType.Machinegun);
+        var player = _currentPlayer;
+        SwitchTurn();
+        players.Remove(player);
+        player.gameObject.SetActive(false);
+        payButton.gameObject.SetActive(false);
+
+        if (players.Count == 1)
+        {
+            dice.gameObject.SetActive(false);
+            switchTurnButton.gameObject.SetActive(false);
+            winPanel.SetActive(true);
+        }
+    }
+
+    private void ReturnFighters(FighterType type)
+    {
+        var player = _currentPlayer.playerClass;
+        var knucklesCount = player.GetFighterCount(type);
+        _currentPlayer.playerClass.RemoveFighters(type, knucklesCount);
+        FighterMarket.ReturnFighters(type, knucklesCount);
     }
 
     private IEnumerable<BusinessClass> GetBusinessesFor(PlayerClass player)
@@ -231,6 +269,10 @@ public class GameLoop : MonoBehaviour
         if (globalEvent is not null)
         {
             eventCard.Enqueue(globalEvent);
+            foreach (var business in _businesses)
+            {
+                business.NotifyNewEvent(globalEvent);
+            }
         }
 
         var localEvent = EventController.RollLocalEvent(_currentPlayer.playerClass);
@@ -280,7 +322,7 @@ public class GameLoop : MonoBehaviour
                 }
                 else
                 {
-                    wallet.TrySpendMoney(Math.Min(change, wallet.money));
+                    wallet.TrySpendMoney(Math.Min(-change, wallet.money));
                 }
                 break;
         }

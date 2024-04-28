@@ -7,6 +7,8 @@ using static UIAnimations;
 public class PayButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private GameObject surrenderButton;
+    
     private PlayerClass _currentPlayer;
     private BusinessClass _business;
     private Action OnPayCallback;
@@ -18,6 +20,7 @@ public class PayButton : MonoBehaviour
         text.text = $"{business.PriceForCellPass}";
         OnPayCallback = callback;
         gameObject.SetActive(true);
+        surrenderButton.SetActive(true);
 
         DOYUIMover(gameObject, -Screen.height);
     }
@@ -34,4 +37,8 @@ public class PayButton : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void OnDisable()
+    {
+        surrenderButton.SetActive(false);
+    }
 }

@@ -15,7 +15,7 @@ public class PlayerFighterUI : MonoBehaviour
 
     private void Awake()
     {
-        gameLoop.FighterMarket.AnyFighterBought += RefreshFighterCount;
+        gameLoop.FighterMarket.Updated += RefreshFighterCount;
         gameLoop.TurnTransfered += RefreshFighterCount;
         gameLoop.TurnTransfered += UpdateCallbacks;
         
@@ -24,7 +24,7 @@ public class PlayerFighterUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        gameLoop.FighterMarket.AnyFighterBought -= RefreshFighterCount;
+        gameLoop.FighterMarket.Updated -= RefreshFighterCount;
         gameLoop.TurnTransfered -= RefreshFighterCount;
         gameLoop.TurnTransfered -= UpdateCallbacks;
     }

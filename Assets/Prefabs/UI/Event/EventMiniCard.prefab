@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5037517802619750878}
   - component: {fileID: 8915330630390253078}
   - component: {fileID: 875927034290689820}
-  - component: {fileID: 535878540886984444}
+  - component: {fileID: 5363991156614804345}
   m_Layer: 0
   m_Name: EventMiniCard
   m_TagString: Untagged
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &535878540886984444
+--- !u!114 &5363991156614804345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,12 +90,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1297599487996412867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9abca69f9896c014f9a7f29fd1f8b225, type: 3}
+  m_Script: {fileID: 11500000, guid: 315e51f919875124b86d1c19bc801901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelText: {fileID: 0}
-  typeIcon: {fileID: 0}
-  sizeIcon: {fileID: 0}
+  openCardButton: {fileID: 356114134239441823}
+  nameText: {fileID: 1992278728369647158}
+  durationText: {fileID: 1301041650064914884}
 --- !u!1 &1650936174048919727
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +354,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1264237919374426086}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5363991156614804345}
+        m_TargetAssemblyTypeName: EventMiniCard, Assembly-CSharp
+        m_MethodName: OpenEventCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
