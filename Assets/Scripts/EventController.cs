@@ -128,14 +128,20 @@ public class EventController : MonoBehaviour
             return;
         }
         
-        _instance._activeLocalEvents[player] = events.Where(tuple => tuple.Item2 - 1 > 0).ToList();
+        _instance._activeLocalEvents[player] = events
+            .Where(tuple => tuple.Item2 - 1 > 0)
+            .Select(tuple => (tuple.Item1, tuple.Item2 - 1))
+            .ToList();
         
         _instance.LocalEventsUpdated?.Invoke();
     }
 
     public static void NotifyAllTurnsPassed()
     {
-        _instance._activeGlobalEvents = _instance._activeGlobalEvents.Where(tuple => tuple.Item2 - 1 > 0).ToList();
+        _instance._activeGlobalEvents = _instance._activeGlobalEvents
+            .Where(tuple => tuple.Item2 - 1 > 0)
+            .Select(tuple => (tuple.Item1, tuple.Item2 - 1))
+            .ToList();
         _instance.GlobalEventsUpdated?.Invoke();
     }
 
