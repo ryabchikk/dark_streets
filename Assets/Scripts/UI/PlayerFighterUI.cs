@@ -19,7 +19,7 @@ public class PlayerFighterUI : MonoBehaviour
         gameLoop.TurnTransfered += RefreshFighterCount;
         gameLoop.TurnTransfered += UpdateCallbacks;
         
-        UpdateCallbacks();
+        //UpdateCallbacks();
     }
 
     private void OnDestroy()
@@ -31,6 +31,7 @@ public class PlayerFighterUI : MonoBehaviour
 
     private void RefreshFighterCount()
     {
+        Debug.Log("Refresh fighter count");
         knucklesCountText.text = gameLoop.PlayerModel.GetFighterCount(FighterType.Knuckles).ToString();
         handgunCountText.text = gameLoop.PlayerModel.GetFighterCount(FighterType.Handgun).ToString();
         machinegunCountText.text = gameLoop.PlayerModel.GetFighterCount(FighterType.Machinegun).ToString();
@@ -42,7 +43,8 @@ public class PlayerFighterUI : MonoBehaviour
         {
             _currentPlayer.FightersChanged -= RefreshFighterCount;
         }
-
+        
+        Debug.Log("Update callbacks");
         _currentPlayer = gameLoop.PlayerModel;
         _currentPlayer.FightersChanged += RefreshFighterCount;
     }

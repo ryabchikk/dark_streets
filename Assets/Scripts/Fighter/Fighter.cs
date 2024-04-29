@@ -16,6 +16,7 @@ public class Fighter
     public static Fighter Knuckles => _fighters[FighterType.Knuckles];
     public static Fighter Handgun => _fighters[FighterType.Handgun];
     public static Fighter Machinegun => _fighters[FighterType.Machinegun];
+    public static float DefenceCoefficient => 1.5f;
 
     private static Dictionary<FighterType, Fighter> _fighters = new()
     {

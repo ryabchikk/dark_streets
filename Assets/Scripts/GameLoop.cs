@@ -21,7 +21,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private PayButton payButton;
     [SerializeField] private EventCard eventCard;
-    [SerializeField] private GameObject winPanel;
+    [SerializeField] private WinPanel winPanel;
 
     public event Action RoundComplete;
     public event Action TurnTransfered;
@@ -62,6 +62,12 @@ public class GameLoop : MonoBehaviour
                     
                     AnyBusinessSold?.Invoke();
                 };
+
+                business.businessClass.Captured += newOwner =>
+                {
+                    var controller = players.First(player => player.playerClass == newOwner);
+                    business.ChangeBusinessColors(controller.playerLightMaterial, controller.playerNeutralMaterial);
+                };
             }
         }
 
@@ -71,6 +77,8 @@ public class GameLoop : MonoBehaviour
         Debug.Log(switchTurnButton.transform.position.x);
         TurnTransfered += RollEvents;
         RoundComplete += EventController.NotifyAllTurnsPassed;
+        
+        TurnTransfered?.Invoke();
     }
 
     // For debug
@@ -158,7 +166,7 @@ public class GameLoop : MonoBehaviour
         {
             dice.gameObject.SetActive(false);
             switchTurnButton.gameObject.SetActive(false);
-            winPanel.SetActive(true);
+            winPanel.Show(players[0]);
         }
     }
 
@@ -233,13 +241,11 @@ public class GameLoop : MonoBehaviour
                 {
                     businessController.ChangeBusinessColors(_currentPlayer.playerLightMaterial, _currentPlayer.playerNeutralMaterial);
                     card.OnSuccessfulBuy();
-
-                    var currentPlayer = _currentPlayer.playerClass;
                     
                     businessController
                         .businessClass
                         .SetOwnerSameTypeBusinessesCountCallback(
-                            () => GetBusinessesFor(currentPlayer).Count(business => business.Type == businessController.businessClass.Type)
+                            owner => GetBusinessesFor(owner).Count(business => business.Type == businessController.businessClass.Type)
                             );
 
                     businessController.businessClass.BusinessSold += OnBusinessSold;
@@ -311,6 +317,7 @@ public class GameLoop : MonoBehaviour
                         var amountToRemove = _currentPlayer.playerClass.GetFighterCount(fighterType);
                         amountToRemove = Math.Min(amountToRemove, change);
                         _currentPlayer.playerClass.RemoveFighters(fighterType, amountToRemove);
+                        FighterMarket.ReturnFighters(fighterType, amountToRemove);
                     } 
                 }
                 break;

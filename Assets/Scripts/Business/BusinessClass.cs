@@ -46,12 +46,13 @@ public class BusinessClass
     public event Action<BusinessClass, PlayerClass> BusinessBought;
     public event Action<BusinessClass, PlayerClass> BusinessSold;
     public event Action LevelChanged;
-    public event Action Updated; 
+    public event Action Updated;
+    public event Action<PlayerClass> Captured; 
 
-    private int OwnerSameTypeBusinessesCount => _getOwnerBusinessCount?.Invoke() ?? 0;
+    private int OwnerSameTypeBusinessesCount => _getOwnerBusinessCount?.Invoke(Owner) ?? 0;
 
     private Dictionary<FighterType, int> _defenders = new();
-    private Func<int> _getOwnerBusinessCount;
+    private Func<PlayerClass, int> _getOwnerBusinessCount;
 
     public BusinessClass(int buyPrice, string name, SizeBusiness size, TypeBusiness type)
     {
@@ -118,9 +119,58 @@ public class BusinessClass
         Updated?.Invoke();
     }
 
-    public void SetOwnerSameTypeBusinessesCountCallback(Func<int> callback)
+    public void SetOwnerSameTypeBusinessesCountCallback(Func<PlayerClass, int> callback)
     {
         _getOwnerBusinessCount = callback;
+    }
+
+    public bool Attack(PlayerClass attacker, Dictionary<FighterType, int> fighters)
+    {
+        double attackPower = fighters[FighterType.Knuckles] * Fighter.Knuckles.Power +
+                             fighters[FighterType.Handgun] * Fighter.Handgun.Power +
+                             fighters[FighterType.Machinegun] * Fighter.Machinegun.Power;
+        
+        double defencePower = GetDefendersCount(FighterType.Knuckles) * Fighter.Knuckles.Power +
+                              GetDefendersCount(FighterType.Handgun) * Fighter.Handgun.Power +
+                              GetDefendersCount(FighterType.Machinegun) * Fighter.Machinegun.Power;
+        defencePower = Math.Ceiling(defencePower * Fighter.DefenceCoefficient);
+        
+        attacker.RemoveFighters(FighterType.Knuckles, fighters[FighterType.Knuckles]);
+        attacker.RemoveFighters(FighterType.Handgun, fighters[FighterType.Handgun]);
+        attacker.RemoveFighters(FighterType.Machinegun, fighters[FighterType.Machinegun]);
+        
+        Func<FighterType, int> getFighterCount;
+        var result = attackPower - defencePower;
+        
+        if (result > 0)
+        {
+            getFighterCount = type => fighters[type];
+        }
+        else
+        {
+            result /= Fighter.DefenceCoefficient;
+            getFighterCount = GetDefendersCount;
+        }
+        
+        var remaining = DistributeRemainingFighters(Math.Abs(result), getFighterCount);
+        
+        if (result > 0)
+        {
+            attacker.AddFighters(FighterType.Knuckles, remaining[FighterType.Knuckles]);
+            attacker.AddFighters(FighterType.Handgun, remaining[FighterType.Handgun]);
+            attacker.AddFighters(FighterType.Machinegun, remaining[FighterType.Machinegun]);
+            Capture(attacker);
+        }
+        else
+        {
+            _defenders[FighterType.Knuckles] = remaining[FighterType.Knuckles];
+            _defenders[FighterType.Handgun] = remaining[FighterType.Handgun];
+            _defenders[FighterType.Machinegun] = remaining[FighterType.Machinegun];
+        }
+        
+        Updated?.Invoke();
+
+        return result > 0;
     }
 
     public bool TryUpgrade()
@@ -161,6 +211,7 @@ public class BusinessClass
             return false;
         }
         
+        Debug.Log("Try add defenders");
         if (!Owner.TrySetDefenders(type, count)) {
             return false;
         }
@@ -176,6 +227,16 @@ public class BusinessClass
         return true;
     }
 
+    private void Capture(PlayerClass newOwner)
+    {
+        _defenders[FighterType.Knuckles] = 0;
+        _defenders[FighterType.Handgun] = 0;
+        _defenders[FighterType.Machinegun] = 0;
+
+        Owner = newOwner;
+        Captured?.Invoke(Owner);
+    }
+
     public bool TryRemoveDefenders(FighterType type, int count)
     {
         if (GetDefendersCount(type) < count)
@@ -188,6 +249,41 @@ public class BusinessClass
         Owner.AddFighters(type, count);
         Updated?.Invoke();
         return true;
+    }
+    
+    private int GetRemainingFighters(ref double remainingPower, Fighter fighter, int notMoreThan)
+    {
+        int result = 0;
+        Debug.Log($"rem {remainingPower} power {fighter.Power} not nore than {notMoreThan}");
+        while (result < notMoreThan && remainingPower >= fighter.Power)
+        {
+            remainingPower -= fighter.Power;
+            result++;
+            Debug.Log($"rem {remainingPower} power {fighter.Power} not nore than {notMoreThan} result {result}");
+        }
+
+        if (result < notMoreThan && remainingPower >= fighter.Power * 0.5)
+        {
+            remainingPower = 0;
+            result++;
+        }
+
+        return result;
+    }
+
+    private Dictionary<FighterType, int> DistributeRemainingFighters(double result, Func<FighterType, int> getFighterCount)
+    {
+        var dict = new Dictionary<FighterType, int>();
+        dict.Add(FighterType.Machinegun, GetRemainingFighters(ref result, Fighter.Machinegun, getFighterCount(FighterType.Knuckles)));
+        dict.Add(FighterType.Handgun, GetRemainingFighters(ref result, Fighter.Handgun, getFighterCount(FighterType.Handgun)));
+        dict.Add(FighterType.Knuckles, GetRemainingFighters(ref result, Fighter.Knuckles, getFighterCount(FighterType.Machinegun)));
+        
+        var market = FighterMarket.Instance;
+        market.ReturnFighters(FighterType.Knuckles, getFighterCount(FighterType.Knuckles) - dict[FighterType.Knuckles]);
+        market.ReturnFighters(FighterType.Handgun, getFighterCount(FighterType.Handgun) - dict[FighterType.Handgun]);
+        market.ReturnFighters(FighterType.Machinegun, getFighterCount(FighterType.Machinegun) - dict[FighterType.Machinegun]);
+
+        return dict;
     }
 
     private bool IsAvailableToUpgrade()
