@@ -22,6 +22,8 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private PayButton payButton;
     [SerializeField] private EventCard eventCard;
     [SerializeField] private WinPanel winPanel;
+    [SerializeField] private Button fighterMarketButton;
+    [SerializeField] private GameObject fighterMarketPanel;
 
     public event Action RoundComplete;
     public event Action TurnTransfered;
@@ -112,6 +114,7 @@ public class GameLoop : MonoBehaviour
 
     public void SwitchTurn()
     {
+        fighterMarketButton.interactable = true;
         card.gameObject.SetActive(false);
         switchTurnButton.gameObject.SetActive(false);
         EventController.NotifyTurnPassed(_currentPlayer.playerClass);
@@ -190,6 +193,8 @@ public class GameLoop : MonoBehaviour
 
     private void StartMovingPlayer()
     {
+        fighterMarketButton.interactable = false;
+        fighterMarketPanel.SetActive(false);
         dice.isRolled = false;
         _steps = dice.finalSide;
         _currentPlayer.playerMovement.isMoving = true;
@@ -260,7 +265,10 @@ public class GameLoop : MonoBehaviour
         else if (businessController.businessClass.Owner != PlayerModel)
         {
             switchTurnButton.gameObject.SetActive(false);
-            payButton.Init(PlayerModel, businessController.businessClass, () => switchTurnButton.gameObject.SetActive(true));
+            payButton.Init(PlayerModel, businessController.businessClass, () =>
+            {
+                switchTurnButton.gameObject.SetActive(true);
+            });
         }
     }
 
