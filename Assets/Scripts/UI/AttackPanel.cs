@@ -93,6 +93,12 @@ public class AttackPanel : MonoBehaviour
         }
     }
 
+    public void Close()
+    {
+        gameObject.SetActive(false);
+        payPanel.SetActive(true);
+    }
+
     private void UpdateStrings()
     {
         attackerKnucklesCountText.text = _fighters[FighterType.Knuckles].ToString();
