@@ -12,6 +12,10 @@ public class EventController : MonoBehaviour
     [SerializeField] private float globalEventChance;
     [SerializeField] private float localEventChance;
 
+    public event Action NewEvent;
+    public event Action GlobalEventsUpdated;
+    public event Action LocalEventsUpdated;
+
     private static EventController _instance;
     private List<(Event, int)> _activeGlobalEvents = new();
     private Dictionary<PlayerClass, List<(Event, int)>> _activeLocalEvents = new();
@@ -85,6 +89,9 @@ public class EventController : MonoBehaviour
         {
             _instance._activeGlobalEvents.Add((ev, ev.Duration));
         }
+        
+        _instance.NewEvent?.Invoke();
+        _instance.GlobalEventsUpdated?.Invoke();
 
         return ev;
     }
@@ -106,6 +113,9 @@ public class EventController : MonoBehaviour
                 _instance._activeLocalEvents[player].Add((ev, ev.Duration));
             }
         }
+        
+        _instance.NewEvent?.Invoke();
+        _instance.LocalEventsUpdated?.Invoke();
 
         return ev;
     }
@@ -118,38 +128,25 @@ public class EventController : MonoBehaviour
             return;
         }
         
-        for (int i = 0; i < events.Count; ++i)
-        {
-            var (ev, rem) = events[i];
-            events[i] = (ev, rem - 1);
-            if (rem - 1 <= 0)
-            {
-                idxToRemove.Add(i);
-            }
-        }
+        _instance._activeLocalEvents[player] = events
+            .Where(tuple => tuple.Item2 - 1 > 0)
+            .Select(tuple => (tuple.Item1, tuple.Item2 - 1))
+            .ToList();
         
-        foreach (var i in idxToRemove)
-        {
-            events.RemoveAt(i);
-        }
+        _instance.LocalEventsUpdated?.Invoke();
     }
 
     public static void NotifyAllTurnsPassed()
     {
-        var idxToRemove = new List<int>();
-        for (int i = 0; i < _instance._activeGlobalEvents.Count; ++i)
-        {
-            var (ev, rem) = _instance._activeGlobalEvents[i];
-            _instance._activeGlobalEvents[i] = (ev, rem - 1);
-            if (rem - 1 <= 0)
-            {
-                idxToRemove.Add(i);
-            }
-        }
-        
-        foreach (var i in idxToRemove)
-        {
-            _instance._activeGlobalEvents.RemoveAt(i);
-        }
+        _instance._activeGlobalEvents = _instance._activeGlobalEvents
+            .Where(tuple => tuple.Item2 - 1 > 0)
+            .Select(tuple => (tuple.Item1, tuple.Item2 - 1))
+            .ToList();
+        _instance.GlobalEventsUpdated?.Invoke();
+    }
+
+    public List<(Event, int)> GlobalEvents()
+    {
+        return _instance._activeGlobalEvents;
     }
 }

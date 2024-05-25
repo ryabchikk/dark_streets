@@ -20,12 +20,17 @@ public class ButtonMethods : MonoBehaviour
         panel.SetActive(true);
         DOXUIMover(panel,-Screen.width);
     }
+    public void OpenRightAnimatePanel(GameObject panel)
+    {
+        panel.SetActive(true);
+        DOXUIMover(panel, Screen.width);
+    }
+
     public void OpenFighterMarketAnimatePanel(GameObject panel)
     {
         panel.SetActive(true);
         DOYUIMover(panel, -Screen.height, 0.5f, Ease.OutBack);
     }
-
     public void ClosePanel(GameObject panel)
     {
         panel.SetActive(false);

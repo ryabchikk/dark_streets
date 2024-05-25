@@ -23,10 +23,11 @@ public class PlayerClass
     public TypePlayer typePlayer { get; private set; }
     public Wallet Wallet { get; }
     public event Action FightersChanged; 
+    public string Name { get; }
 
     private Dictionary<FighterType, int> _fighters;
 
-    public PlayerClass(int money, TypePlayer typePlayer, Wallet wallet)
+    public PlayerClass(int money, TypePlayer typePlayer, Wallet wallet, string name)
     {
         this.typePlayer = typePlayer;
         Wallet = wallet;
@@ -34,6 +35,7 @@ public class PlayerClass
 
         countBusiness = 0;
         _fighters = new Dictionary<FighterType, int>();
+        Name = name;
     }
 
     public int GetFighterCount(FighterType type)
@@ -83,6 +85,8 @@ public class PlayerClass
         {
             return false;
         }
+        
+        Debug.Log("Set defenders");
 
         _fighters[type] -= count;
         FightersChanged?.Invoke();

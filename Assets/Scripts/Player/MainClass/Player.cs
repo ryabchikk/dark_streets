@@ -22,6 +22,6 @@ public class Player : MonoBehaviour
 
     public void Awake()
     {
-        playerClass =  new PlayerClass(money, typePlayer, wallet);
+        playerClass =  new PlayerClass(money, typePlayer, wallet, name);
     }
 }

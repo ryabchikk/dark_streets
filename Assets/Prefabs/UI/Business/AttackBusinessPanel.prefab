@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 5446798905036478396}
   - component: {fileID: 5597141341673559471}
   - component: {fileID: 5198502556927768135}
+  - component: {fileID: 5726087831849699430}
   m_Layer: 0
   m_Name: AttackBusinessPanel
   m_TagString: Untagged
@@ -316,6 +317,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5726087831849699430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258101879819925814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b8a3e34e5ded34dbe6a769525df568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  payPanel: {fileID: 0}
+  attackerKnucklesCountText: {fileID: 426177095098368028}
+  attackerHandgunCountText: {fileID: 9147752735985063230}
+  attackerMachinegunCountText: {fileID: 390411864249437900}
+  defenderKnucklesCountText: {fileID: 212196642133140951}
+  defenderHandgunCountText: {fileID: 6710461130493415262}
+  defenderMachinegunCountText: {fileID: 3261306327415738784}
+  totalCount: {fileID: 1575226521871645090}
+  attackerName: {fileID: 5084526320342313815}
+  defenderName: {fileID: 9160853392614124293}
 --- !u!1 &278700909931725318
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,14 +673,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
-        m_MethodName: AddFighter
+      - m_Target: {fileID: 5726087831849699430}
+        m_TargetAssemblyTypeName: AttackPanel, Assembly-CSharp
+        m_MethodName: Increase
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1185,14 +1208,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
-        m_MethodName: RemoveFighter
+      - m_Target: {fileID: 5726087831849699430}
+        m_TargetAssemblyTypeName: AttackPanel, Assembly-CSharp
+        m_MethodName: Decrease
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1837,14 +1860,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
-        m_MethodName: AddFighter
+      - m_Target: {fileID: 5726087831849699430}
+        m_TargetAssemblyTypeName: AttackPanel, Assembly-CSharp
+        m_MethodName: Increase
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2392,9 +2415,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
-        m_MethodName: AddFighter
+      - m_Target: {fileID: 5726087831849699430}
+        m_TargetAssemblyTypeName: AttackPanel, Assembly-CSharp
+        m_MethodName: Increase
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3241,9 +3264,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
-        m_MethodName: RemoveFighter
+      - m_Target: {fileID: 5726087831849699430}
+        m_TargetAssemblyTypeName: AttackPanel, Assembly-CSharp
+        m_MethodName: Decrease
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3508,14 +3531,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Business.DefenceCard, Assembly-CSharp
-        m_MethodName: RemoveFighter
+      - m_Target: {fileID: 5726087831849699430}
+        m_TargetAssemblyTypeName: AttackPanel, Assembly-CSharp
+        m_MethodName: Decrease
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

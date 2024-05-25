@@ -23,6 +23,7 @@ namespace Business
 
         public void AddFighter(int typeNum)
         {
+            Debug.Log("Add fighter");
             _currentBusiness.TryAddDefenders((FighterType)typeNum, 1);
             UpdateStrings();
         }

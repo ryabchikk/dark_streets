@@ -21,6 +21,9 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private PayButton payButton;
     [SerializeField] private EventCard eventCard;
+    [SerializeField] private WinPanel winPanel;
+    [SerializeField] private Button fighterMarketButton;
+    [SerializeField] private GameObject fighterMarketPanel;
 
     public event Action RoundComplete;
     public event Action TurnTransfered;
@@ -33,8 +36,12 @@ public class GameLoop : MonoBehaviour
     private int _indexPlayer = 0;
     private int _steps = 0;
     private int _prevIndex;
+    private List<BusinessClass> _businesses;
+    
     private void Start()
     {
+        _businesses = new List<BusinessClass>();
+        
         for (int i = 0; i < GameCreation.PlayersCount; ++i)
         {
             var player = playerPrefabs[i];
@@ -50,11 +57,18 @@ public class GameLoop : MonoBehaviour
             var business = map.GetBusinessAt(i);
             if (business is not null)
             {
+                _businesses.Add(business.businessClass);
                 business.businessClass.BusinessSold += (_, _) =>
                 {
                     business.ChangeBusinessColors(business.DefaultLightMaterial, business.DefaultNeutralMaterial);
                     
                     AnyBusinessSold?.Invoke();
+                };
+
+                business.businessClass.Captured += newOwner =>
+                {
+                    var controller = players.First(player => player.playerClass == newOwner);
+                    business.ChangeBusinessColors(controller.playerLightMaterial, controller.playerNeutralMaterial);
                 };
             }
         }
@@ -65,6 +79,8 @@ public class GameLoop : MonoBehaviour
         Debug.Log(switchTurnButton.transform.position.x);
         TurnTransfered += RollEvents;
         RoundComplete += EventController.NotifyAllTurnsPassed;
+        
+        TurnTransfered?.Invoke();
     }
 
     // For debug
@@ -98,6 +114,7 @@ public class GameLoop : MonoBehaviour
 
     public void SwitchTurn()
     {
+        fighterMarketButton.interactable = true;
         card.gameObject.SetActive(false);
         switchTurnButton.gameObject.SetActive(false);
         EventController.NotifyTurnPassed(_currentPlayer.playerClass);
@@ -132,6 +149,38 @@ public class GameLoop : MonoBehaviour
         return GetBusinessesFor(_currentPlayer.playerClass);
     }
 
+    public void Surrender()
+    {
+        foreach (var business in GetBusinessesForCurrentPlayer())
+        {
+            business.Sell();
+        }
+
+        ReturnFighters(FighterType.Knuckles);
+        ReturnFighters(FighterType.Handgun);
+        ReturnFighters(FighterType.Machinegun);
+        var player = _currentPlayer;
+        SwitchTurn();
+        players.Remove(player);
+        player.gameObject.SetActive(false);
+        payButton.gameObject.SetActive(false);
+
+        if (players.Count == 1)
+        {
+            dice.gameObject.SetActive(false);
+            switchTurnButton.gameObject.SetActive(false);
+            winPanel.Show(players[0]);
+        }
+    }
+
+    private void ReturnFighters(FighterType type)
+    {
+        var player = _currentPlayer.playerClass;
+        var knucklesCount = player.GetFighterCount(type);
+        _currentPlayer.playerClass.RemoveFighters(type, knucklesCount);
+        FighterMarket.ReturnFighters(type, knucklesCount);
+    }
+
     private IEnumerable<BusinessClass> GetBusinessesFor(PlayerClass player)
     {
         return map
@@ -144,6 +193,8 @@ public class GameLoop : MonoBehaviour
 
     private void StartMovingPlayer()
     {
+        fighterMarketButton.interactable = false;
+        fighterMarketPanel.SetActive(false);
         dice.isRolled = false;
         _steps = dice.finalSide;
         _currentPlayer.playerMovement.isMoving = true;
@@ -195,13 +246,11 @@ public class GameLoop : MonoBehaviour
                 {
                     businessController.ChangeBusinessColors(_currentPlayer.playerLightMaterial, _currentPlayer.playerNeutralMaterial);
                     card.OnSuccessfulBuy();
-
-                    var currentPlayer = _currentPlayer.playerClass;
                     
                     businessController
                         .businessClass
                         .SetOwnerSameTypeBusinessesCountCallback(
-                            () => GetBusinessesFor(currentPlayer).Count(business => business.Type == businessController.businessClass.Type)
+                            owner => GetBusinessesFor(owner).Count(business => business.Type == businessController.businessClass.Type)
                             );
 
                     businessController.businessClass.BusinessSold += OnBusinessSold;
@@ -216,7 +265,10 @@ public class GameLoop : MonoBehaviour
         else if (businessController.businessClass.Owner != PlayerModel)
         {
             switchTurnButton.gameObject.SetActive(false);
-            payButton.Init(PlayerModel, businessController.businessClass, () => switchTurnButton.gameObject.SetActive(true));
+            payButton.Init(PlayerModel, businessController.businessClass, () =>
+            {
+                switchTurnButton.gameObject.SetActive(true);
+            });
         }
     }
 
@@ -231,6 +283,10 @@ public class GameLoop : MonoBehaviour
         if (globalEvent is not null)
         {
             eventCard.Enqueue(globalEvent);
+            foreach (var business in _businesses)
+            {
+                business.NotifyNewEvent(globalEvent);
+            }
         }
 
         var localEvent = EventController.RollLocalEvent(_currentPlayer.playerClass);
@@ -269,6 +325,7 @@ public class GameLoop : MonoBehaviour
                         var amountToRemove = _currentPlayer.playerClass.GetFighterCount(fighterType);
                         amountToRemove = Math.Min(amountToRemove, change);
                         _currentPlayer.playerClass.RemoveFighters(fighterType, amountToRemove);
+                        FighterMarket.ReturnFighters(fighterType, amountToRemove);
                     } 
                 }
                 break;
@@ -280,7 +337,7 @@ public class GameLoop : MonoBehaviour
                 }
                 else
                 {
-                    wallet.TrySpendMoney(Math.Min(change, wallet.money));
+                    wallet.TrySpendMoney(Math.Min(-change, wallet.money));
                 }
                 break;
         }
