@@ -22,6 +22,7 @@ public class BusinessMiniCanvas : MonoBehaviour
         business.businessClass.Updated += UpdateUI;
         gameLoop.AnyBusinessBought += UpdateUI;
         gameLoop.AnyBusinessSold += UpdateUI;
+        gameLoop.EventsUpdated += UpdateUI;
         UpdateUI();
     }
 
@@ -30,6 +31,7 @@ public class BusinessMiniCanvas : MonoBehaviour
         business.businessClass.Updated -= UpdateUI;
         gameLoop.AnyBusinessBought -= UpdateUI;
         gameLoop.AnyBusinessSold -= UpdateUI;
+        gameLoop.EventsUpdated -= UpdateUI;
     }
 
     public void OnClick()

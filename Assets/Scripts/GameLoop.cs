@@ -24,11 +24,13 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private WinPanel winPanel;
     [SerializeField] private Button fighterMarketButton;
     [SerializeField] private GameObject fighterMarketPanel;
+    [SerializeField] private EventController eventController;
 
     public event Action RoundComplete;
     public event Action TurnTransfered;
     public event Action AnyBusinessBought;
     public event Action AnyBusinessSold;
+    public event Action EventsUpdated;
     public FighterMarket FighterMarket { get; } = new();
     public PlayerClass PlayerModel => _currentPlayer.playerClass;
     
@@ -71,6 +73,8 @@ public class GameLoop : MonoBehaviour
                     business.ChangeBusinessColors(controller.playerLightMaterial, controller.playerNeutralMaterial);
                 };
             }
+
+            eventController.GlobalEventsUpdated += OnGlobalEventsUpdate;
         }
 
         _currentPlayer = players[_indexPlayer];
@@ -275,6 +279,11 @@ public class GameLoop : MonoBehaviour
     private void OnBusinessSold(BusinessClass business, PlayerClass _)
     {
         business.SetOwnerSameTypeBusinessesCountCallback(null);
+    }
+
+    private void OnGlobalEventsUpdate()
+    {
+        EventsUpdated?.Invoke();
     }
 
     private void RollEvents()
